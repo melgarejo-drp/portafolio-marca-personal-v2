@@ -46,6 +46,9 @@ img{max-width:100%;display:block;}
 ::selection{background:var(--moss);color:var(--ink);}
 button,a,[tabindex]{touch-action:manipulation;}
 :focus-visible{outline:2px solid var(--moss);outline-offset:3px;}
+/* Necesario: .card{display:flex} de esta hoja gana sobre el [hidden] del
+   navegador, así que sin esto el filtrado del archivo no ocultaría nada. */
+[hidden]{display:none !important;}
 
 .wrap{max-width:1400px;margin:0 auto;padding:0 var(--edge);}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}

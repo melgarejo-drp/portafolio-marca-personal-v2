@@ -396,7 +396,7 @@ function editBay() {
     ${lanes.map(lane).join('')}
     <div class="nle-playhead" aria-hidden="true"></div>
   </div>
-  <p class="wrap nle-hint">Pasa el cursor sobre una pista para detenerla · arrástrala para recorrerla</p>
+  <p class="wrap nle-hint">Pasa el cursor o mantén el dedo sobre la pista para detenerla · arrástrala para recorrerla</p>
 </section>`;
 }
 
@@ -561,7 +561,7 @@ function marcaPage() {
       <h2 class="camera-title">Idea, cámara, <em>corte</em> y entrega.</h2>
       <p class="camera-lead">Puedo idear una pieza, ponerle la cara, grabarla y editarla. Contenido vertical con voz propia, hecho por alguien que de verdad usa, prueba y cuenta.</p>
       <ul class="delivers">${delivers.map((d) => `<li>${d}</li>`).join('')}</ul>
-      <a class="pill pill-light" href="/redes">Ver piezas para redes ${ICON.arrow}</a>
+      <a class="pill pill-light" href="${SITE.socials[0].url}" target="_blank" rel="noreferrer noopener">Ver mi Instagram ${ICON.arrow}</a>
     </div>
     <ol class="formats">
       ${formats.map(([t, d]) => `<li class="reveal"><h3>${t}</h3><p>${d}</p></li>`).join('')}

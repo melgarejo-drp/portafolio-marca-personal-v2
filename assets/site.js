@@ -261,9 +261,12 @@
       var tick = function () {
         if (!running) return;
         vel *= 0.92;
+        // si una pista está detenida (cursor, dedo o foco), las dos se detienen
+        var held = lanes.some(function (l) { return l.hover || l.focus || l.drag; });
+        if (held) vel = 0;
         lanes.forEach(function (l) {
-          var target = (l.hover || l.focus || l.drag) ? 0 : BASE;
-          l.speed += (target - l.speed) * 0.08;
+          var target = held ? 0 : BASE;
+          l.speed += (target - l.speed) * (held ? 0.25 : 0.08);
           if (!l.drag) l.x += l.dir * (l.speed + Math.abs(vel));
           wrap(l);
           l.belt.style.transform = 'translate3d(' + l.x.toFixed(2) + 'px,0,0)';

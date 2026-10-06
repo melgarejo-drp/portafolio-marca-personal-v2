@@ -604,6 +604,12 @@ a.col-card:hover .col-media img{transform:scale(1.04);}
 @media (max-width:560px){.passions{grid-template-columns:1fr;}}
 .p-actions{margin-top:1.2rem;}
 
+/* ---------- efecto blanco y negro → color: desactivado por ahora ----------
+   Para reactivarlo, borrar este bloque. */
+.blob-media img.base,.clip-media img,.nle-art img,.nle-clip.cued .nle-art img{filter:none;}
+.blob-media .color{display:none;}
+.nle-tint{display:none;}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
   html{scroll-behavior:auto;}

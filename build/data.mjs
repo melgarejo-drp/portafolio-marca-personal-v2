@@ -1,0 +1,194 @@
+// Datos del portafolio. Todo el sitio se genera desde este archivo con `node build/gen.mjs`.
+//
+// Campos de un proyecto:
+//   slug, title, year, format, role, client, studio, tags[], cover, tone (portada tipográfica si no hay cover)
+//   reto, respuesta, quote, kpis[[valor, etiqueta]]
+//   media[]: { yt, title } · { video, poster, title, vertical } · { ig, kind: 'reel'|'p', title }
+//   draft: true  → no se publica (falta material)
+
+export const SITE = {
+  name: 'Simón Melgarejo',
+  role: 'Filmmaker & Editor',
+  tagline: 'Filmmaker, editor e investigador de IA',
+  description: 'Simón Melgarejo — director, filmmaker y editor. Narrativas cinematográficas, colorización y sistemas creativos potenciados por IA.',
+  reel: 'KUhqdR2Sowo',
+  email: ['melgarejorodriguez19', 'gmail.com'],
+  socials: [
+    { name: 'Instagram', url: 'https://www.instagram.com/by.melgarejo/' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/simon-melgarejo/' },
+    { name: 'YouTube', url: 'https://www.youtube.com/@simonmelgarejo' }
+  ]
+};
+
+export const TAGS = [
+  { key: 'direccion', label: 'Dirección' },
+  { key: 'ia', label: 'IA generativa' },
+  { key: 'edicion', label: 'Edición y redes' },
+  { key: 'cubrimiento', label: 'Cubrimientos' }
+];
+
+const yt = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+export const PROJECTS = [
+  {
+    slug: 'ums-juanse-laverde', title: 'Juanse Laverde — Unisabana Music Sessions', short: 'UMS × Juanse Laverde',
+    year: 2022, format: 'Music session', role: 'Dirección, edición y color', client: 'Unisabana',
+    tags: ['direccion'], cover: '/img/ums.webp',
+    reto: 'Transmitir el estilo único del artista en una music session rápida pero efectiva.',
+    respuesta: 'Un formato de menos de 5 minutos donde el artista hace una versión acústica de su canción.',
+    media: [{ yt: 'P_eagrXXdls', title: 'Juanse Laverde — Unisabana Music Sessions' }]
+  },
+  {
+    slug: 'elecciones-2022-unisabana-medios', title: 'Cubrimiento de elecciones 2022 — Unisabana Medios', short: 'Elecciones 2022',
+    year: 2022, format: 'Transmisión en vivo', role: 'Curaduría de material en tiempo real', client: 'Unisabana Medios',
+    tags: ['cubrimiento'], cover: yt('DuO8B_LhX5w'),
+    reto: 'Cubrir las elecciones presidenciales de 2022 en tiempo real.',
+    respuesta: 'Curar material en tiempo real para transmitirlo a través de los canales de comunicación de Unisabana Radio.',
+    media: [{ yt: 'DuO8B_LhX5w', title: 'Cubrimiento de elecciones 2022' }]
+  },
+  {
+    slug: 'el-invasor', title: 'El Invasor',
+    year: 2023, format: 'Corto animado', role: 'Dirección, ilustración, animación y edición',
+    tags: ['direccion'], cover: '/img/el-invasor.webp',
+    reto: '¿Cómo hablar del cuidado de los océanos sin conocer el mar, y hacerlo en menos de 3 días? Transmitir la urgencia ambiental bajo la estricta limitante de 60 segundos.',
+    respuesta: 'Un filminuto animado con una premisa sencilla: si nosotros creamos el problema, somos nosotros quienes podemos solucionarlo. Ilustración artesanal, animación fluida y edición dinámica.',
+    quote: 'Ganador de Cineminutos por el Océano, Delphinus, Cancún.',
+    kpis: [['Ganador', 'Cineminutos por el Océano'], ['150k+', 'Vistas']],
+    media: [{ yt: 'aStnqyI2Nmo', title: 'El Invasor' }]
+  },
+  {
+    slug: 'la-vida-no-es-una', title: 'La vida no es una __',
+    year: 2024, format: 'Campaña de comerciales', role: 'Dirección, montaje, VFX y color',
+    tags: ['direccion'], cover: '/img/la-vida.webp',
+    reto: 'Crear conciencia sobre los accidentes viales usando humor que conectara con jóvenes y adultos, y convertir una campaña educativa en un formato cautivador con alto valor de producción.',
+    respuesta: 'Una micro serie que cuenta, en los lenguajes de cada género audiovisual, por qué es importante conducir con responsabilidad. Dirección cinematográfica, montaje meticuloso de VFX y una colorización atmosférica saturada.',
+    quote: 'Un formato crudo y poderoso que enseña sin que se note la lección.',
+    kpis: [['1.2M', 'Vistas'], ['Global', 'Alcance'], ['04', 'Episodios']],
+    media: [
+      { yt: 'Ehk5HtRCNKM', title: 'La vida no es una telenovela' },
+      { yt: '74zQyojWL-I', title: 'La vida no es una película' },
+      { yt: 'Ladhve6tn7w', title: 'La vida no es un videojuego' },
+      { yt: 'QpROiPq1n_A', title: 'La vida no es una red social' }
+    ]
+  },
+  {
+    slug: 'marleny-arauz', studio: 'Lemon Drop', title: 'Marleny Araúz — reels de marca personal', short: 'Marleny Araúz',
+    year: 2025, format: 'Reels de marca personal', role: 'Edición de video', client: 'Marleny Araúz',
+    tags: ['edicion'], tone: 'clay',
+    respuesta: 'Edición de reels de marca personal para Marleny Araúz.',
+    media: [
+      { ig: 'DIhtuvCynlJ', kind: 'p', title: 'Reel de marca personal' },
+      { ig: 'DJKu4VZybgt', kind: 'p', title: 'Reel de marca personal' }
+    ]
+  },
+  {
+    slug: 'laboratorio-de-actuacion-el-vicio', studio: 'Lemon Drop', title: 'Laboratorio de actuación — El Vicio Producciones', short: 'Laboratorio de actuación',
+    year: 2025, format: 'Edición de video', role: 'Postproducción', client: 'El Vicio Producciones',
+    tags: ['edicion'], cover: '/img/el-vicio.webp',
+    reto: 'Hacer la postproducción de un proyecto grabado en otro país.',
+    respuesta: 'Postproducción con los más altos estándares de calidad.',
+    media: [
+      { ig: 'DMX_ZbQgxW9', kind: 'reel', title: 'Laboratorio de actuación' },
+      { ig: 'DM9QRDstKP7', kind: 'reel', title: 'Laboratorio de actuación' },
+      { ig: 'DNE4YpmNAP5', kind: 'reel', title: 'Laboratorio de actuación' }
+    ]
+  },
+  {
+    slug: 'hablando-como-los-locos', studio: 'Lemon Drop', title: 'Hablando como los Locos',
+    year: 2025, format: 'Reels sobre podcast', role: 'Edición de video', client: 'Hablando como los Locos',
+    tags: ['edicion'], tone: 'ink',
+    respuesta: 'Reels a partir de los episodios del podcast Hablando como los Locos.',
+    media: [{ ig: 'DQH8rlmCitW', kind: 'reel', title: 'Hablando como los Locos' }]
+  },
+  {
+    slug: 'se-lo-digo-en-concreto', studio: 'Lemon Drop', title: 'Se lo digo en concreto',
+    year: 2025, format: 'Serie vertical de opinión', role: 'Edición de video',
+    tags: ['edicion'], tone: 'accent',
+    respuesta: 'Edición de la serie vertical de opinión Se lo digo en concreto.',
+    media: [{ ig: 'DQ9p4ShjlRh', kind: 'reel', title: 'Se lo digo en concreto' }]
+  },
+  {
+    slug: 'sin-prisa-y-sin-pausa', studio: 'Lemon Drop', title: 'Sin prisa y sin pausa',
+    year: 2026, format: 'Promocionales para serie', role: 'Edición de video',
+    tags: ['edicion'], tone: 'sand',
+    respuesta: 'Promocionales para la serie Sin prisa y sin pausa.',
+    media: [{ ig: 'DVlfcHNDjXG', kind: 'reel', title: 'Sin prisa y sin pausa' }]
+  },
+  {
+    slug: 'podcast-familia-y-empresas', studio: 'Lemon Drop', title: 'Podcast Familia y Empresas',
+    year: 2026, format: 'Contenidos sobre podcast', role: 'Edición de video',
+    tags: ['edicion'], cover: '/img/familia-y-empresas.webp', coverVertical: true,
+    respuesta: 'Contenidos de video a partir de los episodios del podcast Familia y Empresas.',
+    related: 'monica-gomez-jaramillo',
+    media: [
+      { video: '/media/ep-familia-y-empresas.mp4', poster: '/img/ep/familia-y-empresas.webp', title: 'Familia y empresas', vertical: true },
+      { ig: 'DW2BMBYEZQg', kind: 'p', title: 'Familia y Empresas' }
+    ]
+  },
+  {
+    slug: 'monica-gomez-jaramillo', studio: 'Lemon Drop', title: 'Mónica Gómez Jaramillo — marca personal y edición automatizada', short: 'Mónica Gómez Jaramillo',
+    year: 2026, format: 'Edición automatizada con IA', role: 'Edición de video y automatización', client: 'Mónica Gómez Jaramillo',
+    tags: ['edicion', 'ia'], cover: '/img/monica-gomez.webp',
+    reto: 'Editar en un día toda una parrilla de contenidos sin morir en el intento.',
+    respuesta: 'Una herramienta que edita reels automáticamente, usando la misma gráfica que ya mantenía la marca: 12 piezas en 40 minutos. Además, reels de marca personal para sus redes.',
+    kpis: [['12', 'Piezas'], ['40 min', 'De edición']],
+    media: [
+      { video: '/media/ep-legado-del-fundador.mp4', poster: '/img/ep/legado-del-fundador.webp', title: 'El legado del fundador', vertical: true },
+      { video: '/media/ep-caso-pergamino.mp4', poster: '/img/ep/caso-pergamino.webp', title: 'Caso Pergamino', vertical: true },
+      { video: '/media/ep-familias-no-hablan-de-dinero.mp4', poster: '/img/ep/familias-no-hablan-de-dinero.webp', title: 'Las familias no hablan de dinero', vertical: true },
+      { video: '/media/ep-comprar-la-paz-con-silencio.mp4', poster: '/img/ep/comprar-la-paz-con-silencio.webp', title: 'Comprar la paz con silencio', vertical: true },
+      { video: '/media/ep-espiritu-de-una-empresa-familiar.mp4', poster: '/img/ep/espiritu-de-una-empresa-familiar.webp', title: 'El espíritu de una empresa familiar', vertical: true },
+      { video: '/media/ep-familia-y-empresas.mp4', poster: '/img/ep/familia-y-empresas.webp', title: 'Familia y empresas', vertical: true },
+      { ig: 'DXxE25zxULT', kind: 'p', title: 'Reels de marca personal' }
+    ]
+  },
+  {
+    slug: 'kling-3', studio: 'Lemon Drop', title: 'Kling 3.0',
+    year: 2026, format: 'Video generativo con IA', role: '', client: 'Kling',
+    tags: ['ia'], cover: '/img/kling-3.webp',
+    reto: '¿Cómo lanzar el modelo de video más potente y mostrar su poder?',
+    respuesta: 'Un video de acción que muestra todas las posibilidades de Kling 3.0.',
+    media: [{ video: '/media/kling-3.mp4', poster: '/img/kling-3.webp', title: 'Kling 3.0' }]
+  },
+  {
+    slug: 'hedra', studio: 'Lemon Drop', title: 'Hedra',
+    year: 2026, format: 'Video generativo con IA', role: '', client: 'Hedra',
+    tags: ['ia'], cover: '/img/hedra.webp',
+    reto: 'Hacer destacar a la marca en un mercado tan competitivo como las plataformas de IA.',
+    respuesta: 'Un video con motion graphics, imitando UI y mostrando todas las posibilidades de la generación con IA.',
+    media: [{ video: '/media/hedra.mp4', poster: '/img/hedra.webp', title: 'Hedra' }]
+  },
+  {
+    slug: 'cine-colombia-emi-falck', studio: 'Lemon Drop', title: 'Comercial Cine Colombia — Emi Falck', short: 'Cine Colombia × Emi Falck',
+    year: 2026, format: 'Comercial con IA', role: '', client: 'Cine Colombia · Emi Falck',
+    tags: ['ia', 'direccion'], cover: '/img/cine-colombia.webp',
+    reto: 'Cambiar la publicidad de salas de Cine Colombia por una que se sintiera como ver una película.',
+    respuesta: 'Usar la IA para contar una historia imposible: 3 personajes, una vida salvada, y cientos de historias como esa.',
+    media: [{ video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', title: 'Comercial Cine Colombia — Emi Falck' }]
+  },
+  {
+    // Pendiente: no hay material de Humind en el repo de Lemon Drop.
+    // Completar portada, textos y piezas, y quitar `draft` para publicarlo.
+    slug: 'humind', title: 'Humind', year: 2026, format: 'Por definir', role: '',
+    tags: ['ia'], tone: 'ink', reto: '', respuesta: '', media: [], draft: true
+  }
+];
+
+// Orden de "Trabajo seleccionado" en el inicio.
+export const FEATURED = ['la-vida-no-es-una', 'cine-colombia-emi-falck', 'el-invasor', 'monica-gomez-jaramillo'];
+
+export const SERVICES = [
+  { title: 'Dirección', text: 'Narrativas visionarias y liderazgo de equipos de producción.' },
+  { title: 'Filmmaking', text: 'Imágenes cinematográficas crudas y de alto contraste.' },
+  { title: 'Montaje', text: 'Cortando líneas de tiempo para un ritmo agresivo e intencional.' },
+  { title: 'Colorización', text: 'Paletas industriales y melancólicas.' },
+  { title: 'IA creativa', text: 'Redes neuronales para expandir la narrativa: video generativo y edición automatizada.' }
+];
+
+// Colecciones de fotos. Las imágenes se leen solas de img/colecciones/<slug>/ (jpg, png o webp,
+// en orden alfabético). La primera es la portada salvo que se indique `cover`.
+export const COLLECTIONS = [
+  { slug: 'al-fuego', title: 'Al fuego', subtitle: 'Chef Felipe Hincapié' },
+  { slug: 'el-castillo', title: 'El Castillo', subtitle: 'Serie fotográfica' },
+  { slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'Colección fotográfica' }
+];

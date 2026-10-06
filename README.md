@@ -16,16 +16,20 @@ navegación con `←` `→`), rediseñado al estilo de la plantilla y con filtro
 | `--ink` | `#111110` | Texto, contacto y pie |
 | `--accent` | `#D62F1F` | Cabezal de la línea de tiempo, estado, CTA del pie |
 
-Tipografías self-hosted: **Inter Tight** (variable) y **JetBrains Mono** (metadatos).
+Tipografías self-hosted: **Inter Tight** (variable) y **JetBrains Mono** (metadatos). La sala de
+montaje conserva las de la v2: **Chakra Petch** y **Space Mono**.
 
 ## Rutas
 
 | URL | Página |
 |---|---|
-| `/` | Hero · Trabajo seleccionado · Línea de tiempo · Lo que hago · Fotografía · Sobre mí · Contacto |
-| `/proyecto/<slug>` | Ficha: metadatos, reto/respuesta, impacto y piezas (YouTube, MP4, Instagram) |
+| `/` | Hero con loop del artista · Línea de tiempo · Destacados · Lo que hago · Fotografía · Sobre mí · Contacto |
+| `/trabajos` | Sala de montaje (línea de tiempo de edición de la v2) + todos los proyectos con filtros |
+| `/redes` | Carrusel de piezas de edición para redes, filtrable por cliente |
+| `/marca-personal` | Creación audiovisual, estudio de la IA y lo artesanal; intereses; formatos frente a cámara |
+| `/proyecto/<slug>` | Ficha: metadatos, galardón, reto/respuesta, impacto y piezas (YouTube, MP4, Instagram) |
 | `/coleccion/<slug>` | Galería con lightbox (sólo se genera si la colección tiene fotos) |
-| `/archivo` | Redirige a `/#proyectos` |
+| `/archivo` | Redirige a `/trabajos` |
 
 ## Editar contenido
 
@@ -40,6 +44,12 @@ No editar esos archivos a mano.
 
 - **Proyecto nuevo**: agregar un objeto a `PROJECTS` (en orden cronológico). `draft: true` lo deja fuera.
 - **Humind** está como borrador: falta portada, textos y piezas.
+- **Roque**: falta portada, rol y enlace (hoy usa portada tipográfica).
+- **Carrusel de redes**: `REELS` en `build/data.mjs`. Para una pieza de Instagram basta el código de la
+  URL (`instagram.com/reel/<código>/`). Pendientes: Conversaciones de piernas abiertas, cuenta de
+  Lemon Drop y redes de Emi Falck.
+- **Loop del artista**: los fotogramas salen de `img/artista/` (orden alfabético, 4:5). Hoy son seis
+  tratamientos del mismo retrato; reemplázalos por fotos reales en secuencia para un loop tipo GIF.
 - **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`
   (`al-fuego`, `el-castillo`, `la-base-fraternidad`) y volver a generar. El orden es alfabético;
   la primera es la portada. Recomendado: WebP de ~1600 px de ancho.

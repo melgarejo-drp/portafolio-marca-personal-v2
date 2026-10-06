@@ -2,7 +2,7 @@
 //
 // Campos de un proyecto:
 //   slug, title, year, format, role, client, studio, tags[], cover, tone (portada tipográfica si no hay cover)
-//   reto, respuesta, quote, kpis[[valor, etiqueta]]
+//   reto, respuesta, quote, kpis[[valor, etiqueta]], award (galardón), link (pieza completa externa)
 //   media[]: { yt, title } · { video, poster, title, vertical } · { ig, kind: 'reel'|'p', title }
 //   draft: true  → no se publica (falta material)
 
@@ -22,6 +22,7 @@ export const SITE = {
 
 export const TAGS = [
   { key: 'direccion', label: 'Dirección' },
+  { key: 'cortos', label: 'Cortometrajes' },
   { key: 'ia', label: 'IA generativa' },
   { key: 'edicion', label: 'Edición y redes' },
   { key: 'cubrimiento', label: 'Cubrimientos' }
@@ -49,12 +50,24 @@ export const PROJECTS = [
   {
     slug: 'el-invasor', title: 'El Invasor',
     year: 2023, format: 'Corto animado', role: 'Dirección, ilustración, animación y edición',
-    tags: ['direccion'], cover: '/img/el-invasor.webp',
+    tags: ['direccion', 'cortos'], cover: '/img/el-invasor.webp', award: 'Ganador · Cineminutos por el Océano',
     reto: '¿Cómo hablar del cuidado de los océanos sin conocer el mar, y hacerlo en menos de 3 días? Transmitir la urgencia ambiental bajo la estricta limitante de 60 segundos.',
     respuesta: 'Un filminuto animado con una premisa sencilla: si nosotros creamos el problema, somos nosotros quienes podemos solucionarlo. Ilustración artesanal, animación fluida y edición dinámica.',
     quote: 'Ganador de Cineminutos por el Océano, Delphinus, Cancún.',
     kpis: [['Ganador', 'Cineminutos por el Océano'], ['150k+', 'Vistas']],
     media: [{ yt: 'aStnqyI2Nmo', title: 'El Invasor' }]
+  },
+  {
+    slug: 'staccato', title: 'Staccato',
+    year: 2023, format: 'Cortometraje', role: 'Director',
+    tags: ['direccion', 'cortos'], cover: '/img/staccato.webp',
+    link: 'https://simonmelgarejo.myportfolio.com/staccato', media: []
+  },
+  {
+    slug: 'the-book', title: 'The Book',
+    year: 2023, format: 'Cortometraje', role: 'Camarógrafo y colorista',
+    tags: ['cortos'], cover: '/img/the-book.webp',
+    link: 'https://simonmelgarejo.myportfolio.com/the-book', media: []
   },
   {
     slug: 'la-vida-no-es-una', title: 'La vida no es una __',
@@ -70,6 +83,18 @@ export const PROJECTS = [
       { yt: 'Ladhve6tn7w', title: 'La vida no es un videojuego' },
       { yt: 'QpROiPq1n_A', title: 'La vida no es una red social' }
     ]
+  },
+  {
+    slug: 'dopamine-jara', title: 'Dopamine — Jara', short: 'Dopamine',
+    year: 2024, format: 'Videoclip', role: 'Asistente de dirección', client: 'Jara',
+    tags: ['direccion'], cover: '/img/dopamine.webp',
+    link: 'https://simonmelgarejo.myportfolio.com/dopamine-jara', media: []
+  },
+  {
+    slug: 'un-perdon-no-es-suficiente', title: 'Un perdón no es suficiente',
+    year: 2024, format: 'Cortometraje', role: 'Director de posproducción, DP y colorista',
+    tags: ['cortos'], cover: '/img/perdon.webp',
+    link: 'https://simonmelgarejo.myportfolio.com/un-perdon-no-es-suficiente', media: []
   },
   {
     slug: 'marleny-arauz', studio: 'Lemon Drop', title: 'Marleny Araúz — reels de marca personal', short: 'Marleny Araúz',
@@ -167,6 +192,14 @@ export const PROJECTS = [
     media: [{ video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', title: 'Comercial Cine Colombia — Emi Falck' }]
   },
   {
+    // Pendiente: portada, rol, sinopsis y enlace al corto.
+    slug: 'roque', title: 'Roque',
+    year: 2026, format: 'Cortometraje', role: '',
+    tags: ['cortos'], tone: 'accent',
+    award: 'Prenominado · Categoría profesional · Smartfilms 2026',
+    media: []
+  },
+  {
     // Pendiente: no hay material de Humind en el repo de Lemon Drop.
     // Completar portada, textos y piezas, y quitar `draft` para publicarlo.
     slug: 'humind', title: 'Humind', year: 2026, format: 'Por definir', role: '',
@@ -175,7 +208,39 @@ export const PROJECTS = [
 ];
 
 // Orden de "Trabajo seleccionado" en el inicio.
-export const FEATURED = ['la-vida-no-es-una', 'cine-colombia-emi-falck', 'el-invasor', 'monica-gomez-jaramillo'];
+export const FEATURED = ['el-invasor', 'roque', 'cine-colombia-emi-falck', 'la-vida-no-es-una'];
+
+// Carrusel de edición para redes (/redes). Cada pieza: { client, title, ig + kind } o { video, poster, vertical }.
+// `draft: true` = falta el enlace; no se publica.
+export const REELS = [
+  { client: 'Mónica Gómez Jaramillo', title: 'El legado del fundador', video: '/media/ep-legado-del-fundador.mp4', poster: '/img/ep/legado-del-fundador.webp', project: 'monica-gomez-jaramillo' },
+  { client: 'Mónica Gómez Jaramillo', title: 'Caso Pergamino', video: '/media/ep-caso-pergamino.mp4', poster: '/img/ep/caso-pergamino.webp', project: 'monica-gomez-jaramillo' },
+  { client: 'Mónica Gómez Jaramillo', title: 'Las familias no hablan de dinero', video: '/media/ep-familias-no-hablan-de-dinero.mp4', poster: '/img/ep/familias-no-hablan-de-dinero.webp', project: 'monica-gomez-jaramillo' },
+  { client: 'Mónica Gómez Jaramillo', title: 'Comprar la paz con silencio', video: '/media/ep-comprar-la-paz-con-silencio.mp4', poster: '/img/ep/comprar-la-paz-con-silencio.webp', project: 'monica-gomez-jaramillo' },
+  { client: 'Mónica Gómez Jaramillo', title: 'El espíritu de una empresa familiar', video: '/media/ep-espiritu-de-una-empresa-familiar.mp4', poster: '/img/ep/espiritu-de-una-empresa-familiar.webp', project: 'monica-gomez-jaramillo' },
+  { client: 'Mónica Gómez Jaramillo', title: 'Reels de marca personal', ig: 'DXxE25zxULT', kind: 'p', project: 'monica-gomez-jaramillo' },
+  { client: 'Familia y Empresas', title: 'Familia y empresas', video: '/media/ep-familia-y-empresas.mp4', poster: '/img/ep/familia-y-empresas.webp', project: 'podcast-familia-y-empresas' },
+  { client: 'Familia y Empresas', title: 'Contenidos sobre el podcast', ig: 'DW2BMBYEZQg', kind: 'p', project: 'podcast-familia-y-empresas' },
+  { client: 'Hablando como los Locos', title: 'Reels sobre el podcast', ig: 'DQH8rlmCitW', kind: 'reel', project: 'hablando-como-los-locos' },
+  { client: 'Se lo digo en concreto', title: 'Serie vertical de opinión', ig: 'DQ9p4ShjlRh', kind: 'reel', project: 'se-lo-digo-en-concreto' },
+  { client: 'Sin prisa y sin pausa', title: 'Promocional de la serie', ig: 'DVlfcHNDjXG', kind: 'reel', project: 'sin-prisa-y-sin-pausa' },
+  { client: 'Marleny Araúz', title: 'Reel de marca personal', ig: 'DIhtuvCynlJ', kind: 'p', project: 'marleny-arauz' },
+  { client: 'Marleny Araúz', title: 'Reel de marca personal', ig: 'DJKu4VZybgt', kind: 'p', project: 'marleny-arauz' },
+  { client: 'Emi Falck', title: 'Comercial Cine Colombia', video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', wide: true, project: 'cine-colombia-emi-falck' },
+  { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DMX_ZbQgxW9', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
+  { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DM9QRDstKP7', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
+  { client: 'Lemon Drop', title: 'La Reina del Flow', ig: 'DTd6vidimCQ', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'A otro nivel con Cristina Hurtado', ig: 'DVhg70cD395', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'Hablemos de música con Juanma', ig: 'DTgfbNIAp0S', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'Desafío del Siglo XXI con Sebastián Martino', ig: 'DQvOwU3EaL_', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'Pauta digital para Caracol Music', ig: 'DHcFYSBvfF5', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'Atomy — una solución para cada problema', ig: 'DFqxYygCBtz', kind: 'reel' },
+  { client: 'Lemon Drop', title: 'Atomy — una solución para cada problema', ig: 'DGEZ-E4y2U1', kind: 'reel' },
+  // Pendientes: pegar el código de la publicación de Instagram y quitar `draft`.
+  { client: 'Conversaciones de piernas abiertas', title: 'Por definir', ig: '', kind: 'reel', draft: true },
+  { client: 'Lemon Drop', title: 'Publicaciones de la cuenta de Lemon Drop', ig: '', kind: 'reel', draft: true },
+  { client: 'Emi Falck', title: 'Publicaciones en redes de Emi Falck', ig: '', kind: 'reel', draft: true }
+];
 
 export const SERVICES = [
   { title: 'Dirección', text: 'Narrativas visionarias y liderazgo de equipos de producción.' },

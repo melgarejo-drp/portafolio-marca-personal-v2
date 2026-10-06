@@ -60,7 +60,7 @@
   "redirects": [
     {
       "source": "/archivo",
-      "destination": "/#proyectos",
+      "destination": "/trabajos",
       "permanent": true
     }
   ]

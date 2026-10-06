@@ -564,4 +564,60 @@
       st.textContent = 'Abriendo tu cliente de correo…';
     });
   }
+
+  /* ---------- transición entre páginas: ventana rectangular sobre fondo rojo ---------- */
+  (function () {
+    var EASE = 'cubic-bezier(.76,0,.24,1)', DUR = 620;
+    var pt = document.createElement('div');
+    pt.className = 'pt'; pt.setAttribute('aria-hidden', 'true');
+    pt.innerHTML = '<span class="pt-hole"></span><span class="pt-label"><b></b><span>Simón Melgarejo</span></span>';
+    document.body.appendChild(pt);
+    var hole = pt.firstChild, label = pt.lastChild;
+    var vw = function () { return window.innerWidth; }, vh = function () { return window.innerHeight; };
+    var size = function (k) { return { width: Math.round(vw() * k) + 'px', height: Math.round(vh() * k) + 'px' }; };
+    var open = function (k) { var r = size(k); hole.style.width = r.width; hole.style.height = r.height; };
+
+    // entrada: la página llega cubierta de rojo y la ventana se abre desde el centro
+    var root = document.documentElement;
+    if (root.classList.contains('pt-in')) {
+      open(0);
+      root.classList.remove('pt-in');
+      if (reduced) open(1.02);
+      else hole.animate([size(0), size(1.02)], { duration: DUR + 120, easing: EASE, fill: 'forwards', delay: 60 })
+        .finished.then(function () { open(1.02); }).catch(function () { open(1.02); });
+    } else open(1.02);
+
+    // salida: la ventana se cierra sobre la página y luego se navega
+    var leaving = false;
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest('a[href]'); if (!a) return;
+      if (a.target && a.target !== '_self') return;
+      if (a.hasAttribute('download') || a.getAttribute('href').charAt(0) === '#') return;
+      var url; try { url = new URL(a.href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+      if (url.pathname === location.pathname && url.search === location.search) return; // misma página: deja el salto al ancla
+      if (reduced || leaving) return;
+      e.preventDefault(); leaving = true;
+      try { sessionStorage.setItem('pt', '1'); } catch (err) {}
+      var name = (a.querySelector('.work-title,.next-title,.reel-title,.nle-title,.clip-title') || a).textContent.replace(/\s+/g, ' ').trim();
+      label.firstChild.textContent = name.length > 34 ? '' : name;
+      pt.classList.add('active');
+      var anim = hole.animate([size(1.02), size(0)], { duration: DUR, easing: EASE, fill: 'forwards' });
+      label.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: DUR - 260, easing: 'ease-out', fill: 'forwards' });
+      var go = function () { location.href = url.href; };
+      anim.finished.then(function () { setTimeout(go, 140); }).catch(go);
+      setTimeout(go, DUR + 900); // por si la animación no termina
+    });
+
+    // al volver con el botón atrás (bfcache) la página no debe quedar tapada
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted) return;
+      leaving = false; pt.classList.remove('active');
+      hole.getAnimations().forEach(function (an) { an.cancel(); });
+      label.getAnimations().forEach(function (an) { an.cancel(); });
+      open(1.02);
+    });
+    window.addEventListener('resize', function () { if (!leaving) open(1.02); });
+  })();
 })();

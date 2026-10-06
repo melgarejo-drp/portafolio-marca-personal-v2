@@ -6,10 +6,24 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
 
   /* ---------- cada página empieza desde arriba ---------- */
+  // Algunos visores (y el botón atrás) restauran la posición después de cargar,
+  // así que se repite unas veces hasta que el visitante interactúe.
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  var toTop = function () { if (!location.hash) window.scrollTo(0, 0); };
+  var userMoved = false;
+  ['wheel', 'touchmove', 'keydown', 'pointerdown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { userMoved = true; }, { passive: true, once: true });
+  });
+  var toTop = function () {
+    if (location.hash || userMoved) return;
+    var root = document.documentElement, prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0); root.scrollTop = 0; if (document.body) document.body.scrollTop = 0;
+    root.style.scrollBehavior = prev;
+  };
   toTop();
-  window.addEventListener('pageshow', function (e) { if (e.persisted) toTop(); });
+  document.addEventListener('DOMContentLoaded', toTop);
+  window.addEventListener('load', function () { toTop(); [60, 250, 600, 1200].forEach(function (t) { setTimeout(toTop, t); }); });
+  window.addEventListener('pageshow', function () { userMoved = false; toTop(); setTimeout(toTop, 120); });
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ---------- navegación: fondo al hacer scroll, se esconde al bajar ---------- */

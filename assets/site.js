@@ -4,6 +4,12 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
+
+  /* ---------- cada página empieza desde arriba ---------- */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  var toTop = function () { if (!location.hash) window.scrollTo(0, 0); };
+  toTop();
+  window.addEventListener('pageshow', function (e) { if (e.persisted) toTop(); });
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ---------- navegación: fondo al hacer scroll, se esconde al bajar ---------- */
@@ -213,24 +219,107 @@
     }
   }
 
-  /* ---------- sala de montaje (Trabajos) ---------- */
+  /* ---------- sala de montaje (Trabajos): dos pistas en sentido contrario ---------- */
   var nle = $('[data-nle]');
   if (nle) {
-    var nclips = $$('.nle-clip', nle), marks = $$('[data-mark]', nle);
-    // la regla marca cada año justo donde empieza su primer clip
-    var placeMarks = function () {
-      var inner = $('.nle-inner', nle), pl = parseFloat(getComputedStyle(inner).paddingLeft) || 0;
-      marks.forEach(function (m) {
-        var first = nclips.filter(function (c) { return c.getAttribute('data-year') === m.getAttribute('data-mark'); })[0];
-        if (first) m.style.left = (first.offsetLeft - pl) + 'px';
+    var lanes = $$('[data-lane]', nle).map(function (el) {
+      var belt = $('[data-belt]', el);
+      return { el: el, vp: $('.nle-viewport', el), belt: belt, dir: Number(el.getAttribute('data-dir')) || -1,
+        clips: $$('.nle-clip', belt), x: 0, half: 0, speed: 0, hover: false, focus: false };
+    });
+    var ruler = $('[data-ruler]', nle), tc = $('[data-nle-tc]', nle);
+    if (reduced) nle.classList.add('reduce-nle');
+    else {
+      var measure = function () {
+        lanes.forEach(function (l) {
+          var n = l.clips.length / 2, first = l.clips[0], clone = l.clips[n];
+          l.half = clone && first ? clone.offsetLeft - first.offsetLeft : l.belt.scrollWidth / 2;
+          if (!l.x) l.x = l.dir > 0 ? -l.half / 2 : 0;
+        });
+      };
+      var wrap = function (l) {
+        if (!l.half) return;
+        while (l.x <= -l.half) l.x += l.half;
+        while (l.x > 0) l.x -= l.half;
+      };
+      var BASE = window.innerWidth < 700 ? 0.45 : 0.6, vel = 0, lastScroll = window.scrollY, frame = 0, running = false, travelled = 0;
+      window.addEventListener('scroll', function () {
+        var d = window.scrollY - lastScroll; lastScroll = window.scrollY;
+        vel = Math.max(-40, Math.min(40, vel + d * 0.25)); // el scroll de la página empuja las pistas
+      }, { passive: true });
+      var cue = function () {
+        lanes.forEach(function (l) {
+          var r = l.vp.getBoundingClientRect(), mid = r.left + r.width / 2, best = null, bd = Infinity;
+          l.clips.forEach(function (c) {
+            var b = c.getBoundingClientRect(), d = Math.abs(b.left + b.width / 2 - mid);
+            if (d < bd) { bd = d; best = c; }
+          });
+          l.clips.forEach(function (c) { c.classList.toggle('cued', c === best); });
+        });
+      };
+      var pad2 = function (n) { return String(n).padStart(2, '0'); };
+      var tick = function () {
+        if (!running) return;
+        vel *= 0.92;
+        lanes.forEach(function (l) {
+          var target = (l.hover || l.focus || l.drag) ? 0 : BASE;
+          l.speed += (target - l.speed) * 0.08;
+          if (!l.drag) l.x += l.dir * (l.speed + Math.abs(vel));
+          wrap(l);
+          l.belt.style.transform = 'translate3d(' + l.x.toFixed(2) + 'px,0,0)';
+        });
+        travelled += lanes[0].speed + Math.abs(vel);
+        if (ruler) ruler.style.setProperty('--rx', lanes[0].x.toFixed(1) + 'px');
+        if (tc) { var f = Math.floor(travelled / 3); tc.textContent = pad2(Math.floor(f / 86400) % 24) + ':' + pad2(Math.floor(f / 1440) % 60) + ':' + pad2(Math.floor(f / 24) % 60) + ':' + pad2(f % 24); }
+        if (++frame % 6 === 0) cue();
+        requestAnimationFrame(tick);
+      };
+      var start = function () { if (!running) { running = true; requestAnimationFrame(tick); } };
+      var stop = function () { running = false; };
+      measure();
+      window.addEventListener('resize', measure);
+      window.addEventListener('load', measure);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) start(); else stop(); }); }).observe(nle);
+      } else start();
+      document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
+
+      lanes.forEach(function (l, i) {
+        var other = lanes[1 - i];
+        l.vp.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') l.hover = true; });
+        l.vp.addEventListener('pointerleave', function () { l.hover = false; });
+        // arrastrar: la pista sigue al dedo y la otra se mueve en sentido contrario
+        var sx = 0, moved = 0, lastX = 0, pid = null;
+        l.vp.addEventListener('pointerdown', function (e) {
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
+          pid = e.pointerId; sx = lastX = e.clientX; moved = 0; l.drag = true;
+        });
+        window.addEventListener('pointermove', function (e) {
+          if (!l.drag || e.pointerId !== pid) return;
+          var dx = e.clientX - lastX; lastX = e.clientX; moved = Math.max(moved, Math.abs(e.clientX - sx));
+          if (moved > 4) l.vp.classList.add('dragging');
+          l.x += dx; other.x -= dx; wrap(l); wrap(other);
+        });
+        var end = function (e) {
+          if (!l.drag || (e && e.pointerId !== pid)) return;
+          l.drag = false; pid = null; l.vp.classList.remove('dragging');
+          if (moved > 6) {
+            var kill = function (ev) { ev.preventDefault(); ev.stopPropagation(); };
+            l.vp.addEventListener('click', kill, { capture: true, once: true });
+            setTimeout(function () { l.vp.removeEventListener('click', kill, true); }, 60);
+          }
+        };
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', end);
+        // teclado: al enfocar un clip, la pista se detiene y lo centra
+        l.belt.addEventListener('focusin', function (e) {
+          var c = e.target.closest('.nle-clip'); if (!c) return;
+          l.focus = true;
+          l.x = -(c.offsetLeft - l.vp.clientWidth / 2 + c.offsetWidth / 2); wrap(l);
+        });
+        l.belt.addEventListener('focusout', function () { l.focus = false; });
       });
-    };
-    placeMarks();
-    window.addEventListener('resize', placeMarks);
-    window.addEventListener('load', placeMarks);
-    dragScroll(nle);
-    keyScroll(nle, 'Sala de montaje: proyectos en orden cronológico, desplazable con las flechas');
-    cueTrack(nle, nclips);
+    }
   }
 
   /* ---------- grilla filtrable de Trabajos ---------- */

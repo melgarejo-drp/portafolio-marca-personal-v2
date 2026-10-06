@@ -14,11 +14,20 @@ const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const igUrl = (r) => `https://www.instagram.com/${r.kind === 'p' ? 'p' : 'reel'}/${r.ig}/`;
 const fileName = (p) => (p.short || p.title).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 22) + '.mov';
 
-const projects = PROJECTS.filter((p) => !p.draft);
+// Miniaturas de publicaciones de Instagram: img/redes/<código>.(webp|jpg). Si existen, sirven de portada.
+const igThumb = (code) => {
+  for (const ext of ['webp', 'jpg', 'png']) if (code && existsSync(join(ROOT, 'img', 'redes', `${code}.${ext}`))) return `/img/redes/${code}.${ext}`;
+  return null;
+};
+const projects = PROJECTS.filter((p) => !p.draft).map((p) => {
+  if (p.cover) return p;
+  const ig = p.media.find((m) => m.ig && igThumb(m.ig));
+  return ig ? { ...p, cover: igThumb(ig.ig), coverVertical: true } : p;
+});
 const bySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));
 const years = [...new Set(projects.map((p) => p.year))].sort();
 const tagLabel = Object.fromEntries(TAGS.map((t) => [t.key, t.label]));
-const reels = REELS.filter((r) => !r.draft);
+const reels = REELS.filter((r) => !r.draft).map((r) => (r.ig && !r.poster ? { ...r, thumb: igThumb(r.ig) } : r));
 const reelClients = [...new Set(reels.map((r) => r.client))];
 
 const readImages = (rel) => {
@@ -140,6 +149,7 @@ function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
+<script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
 <body class="${bodyClass}">
 ${header(current)}
@@ -343,35 +353,50 @@ function home() {
 /* ---------------------------------------------------------------- trabajos */
 
 // Sala de montaje: la línea de tiempo de edición de la v2 (regla de años + cabezal rojo).
+// Sala de montaje: dos pistas (V1 y V2) que se desplazan en sentido contrario bajo un cabezal fijo.
+const isCine = (p) => p.tags.some((t) => ['direccion', 'cortos', 'cubrimiento'].includes(t));
+function nleClip(p, n, clone) {
+  return `
+        <a class="nle-clip" href="/proyecto/${p.slug}"${clone ? ' aria-hidden="true" tabindex="-1" data-clone' : ''}>
+          <span class="nle-head"><b>${pad(n)}</b> ${esc(fileName(p))}</span>
+          <span class="nle-art">${cover(p, { cls: p.coverVertical ? 'fit-contain' : '' })}<span class="nle-tint" aria-hidden="true"></span></span>
+          <span class="nle-foot">
+            <span class="nle-title">${esc(p.short || p.title)}</span>
+            <span class="nle-role">${esc(p.role || p.award || p.client || p.studio || '')}</span>
+            <span class="nle-bar"><span>${esc(p.format)}</span><span class="yr">${p.year}</span></span>
+          </span>
+        </a>`;
+}
 function editBay() {
-  const clips = projects.map((p, i) => `
-      <a class="nle-clip" href="/proyecto/${p.slug}" data-year="${p.year}">
-        <span class="nle-head"><b>${pad(i + 1)}</b> ${esc(fileName(p))}</span>
-        <span class="nle-art">${cover(p, { cls: p.coverVertical ? 'fit-contain' : '' })}<span class="nle-tint" aria-hidden="true"></span></span>
-        <span class="nle-foot">
-          <span class="nle-title">${esc(p.short || p.title)}</span>
-          <span class="nle-role">${esc(p.role || p.award || p.client || p.studio || '')}</span>
-          <span class="nle-bar"><span>${esc(p.format)}</span><span class="yr">${p.year}</span></span>
-        </span>
-      </a>`).join('');
+  const lanes = [
+    { id: 'V1', name: 'Cine y dirección', dir: -1, items: projects.filter(isCine) },
+    { id: 'V2', name: 'IA, edición y redes', dir: 1, items: projects.filter((p) => !isCine(p)) }
+  ];
+  const lane = (l) => {
+    const clips = l.items.map((p) => nleClip(p, projects.indexOf(p) + 1, false)).join('');
+    const clones = l.items.map((p) => nleClip(p, projects.indexOf(p) + 1, true)).join('');
+    return `
+    <div class="nle-lane" data-lane data-dir="${l.dir}">
+      <span class="nle-label" aria-hidden="true"><b>${l.id}</b><small>${l.name}</small><i>${l.dir < 0 ? '←' : '→'}</i></span>
+      <div class="nle-viewport" role="region" aria-label="Pista ${l.id}: ${l.name}">
+        <div class="nle-belt" data-belt>${clips}${clones}
+        </div>
+      </div>
+    </div>`;
+  };
   return `
 <section class="bay" id="sala">
   <div class="wrap bay-head">
     <p class="bay-eyebrow"><i aria-hidden="true"></i>~/linea-de-tiempo</p>
     <h1 class="bay-title">La sala de montaje</h1>
-    <p class="bay-lede">${projects.length} clips en la pista · ${years[0]} → ${years[years.length - 1]}</p>
+    <p class="bay-lede">${projects.length} clips en dos pistas · ${years[0]} → ${years[years.length - 1]}</p>
   </div>
-  <div class="nle">
-    <div class="nle-scroll" data-nle>
-      <div class="nle-inner">
-        <div class="nle-ruler" aria-hidden="true">${years.map((y) => `<span class="nle-mark" data-mark="${y}"><span>${y}</span></span>`).join('')}</div>
-        <div class="nle-track">${clips}
-        </div>
-      </div>
-    </div>
+  <div class="nle" data-nle>
+    <div class="nle-ruler" data-ruler aria-hidden="true"><span class="nle-tc" data-nle-tc>00:00:00:00</span></div>
+    ${lanes.map(lane).join('')}
     <div class="nle-playhead" aria-hidden="true"></div>
   </div>
-  <p class="wrap nle-hint">Arrastra la pista, desliza o usa <kbd>←</kbd> <kbd>→</kbd></p>
+  <p class="wrap nle-hint">Pasa el cursor sobre una pista para detenerla · arrástrala para recorrerla</p>
 </section>`;
 }
 
@@ -403,7 +428,8 @@ function reelCard(r, i) {
     media = `<video muted loop playsinline preload="none" poster="${esc(r.poster || '')}"><source src="${esc(r.video)}" type="video/mp4"></video>
           <button class="reel-sound" type="button" data-sound aria-label="Activar sonido" aria-pressed="false">${ICON.sound}</button>`;
   } else {
-    media = `<a class="reel-ig" href="${igUrl(r)}" target="_blank" rel="noopener" data-ig="${r.ig}" data-kind="${r.kind}" aria-label="Ver ${esc(r.title)} — ${esc(r.client)} en Instagram">
+    media = `<a class="reel-ig${r.thumb ? ' has-thumb' : ''}" href="${igUrl(r)}" target="_blank" rel="noopener" data-ig="${r.ig}" data-kind="${r.kind}" aria-label="Ver ${esc(r.title)} — ${esc(r.client)} en Instagram">
+            ${r.thumb ? `<img class="reel-thumb" src="${r.thumb}" alt="" loading="lazy" decoding="async">` : ''}
             <span class="reel-ig-client">${esc(r.client)}</span>
             <span class="reel-ig-play">${ICON.play}</span>
             <span class="reel-ig-cta">${r.kind === 'p' ? 'Ver publicación' : 'Ver reel'} ↗</span>

@@ -229,16 +229,8 @@ export const REELS = [
   { client: 'Emi Falck', title: 'Comercial Cine Colombia', video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', wide: true, project: 'cine-colombia-emi-falck' },
   { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DMX_ZbQgxW9', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
   { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DM9QRDstKP7', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
-  { client: 'Lemon Drop', title: 'La Reina del Flow', ig: 'DTd6vidimCQ', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'A otro nivel con Cristina Hurtado', ig: 'DVhg70cD395', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'Hablemos de música con Juanma', ig: 'DTgfbNIAp0S', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'Desafío del Siglo XXI con Sebastián Martino', ig: 'DQvOwU3EaL_', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'Pauta digital para Caracol Music', ig: 'DHcFYSBvfF5', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'Atomy — una solución para cada problema', ig: 'DFqxYygCBtz', kind: 'reel' },
-  { client: 'Lemon Drop', title: 'Atomy — una solución para cada problema', ig: 'DGEZ-E4y2U1', kind: 'reel' },
   // Pendientes: pegar el código de la publicación de Instagram y quitar `draft`.
   { client: 'Conversaciones de piernas abiertas', title: 'Por definir', ig: '', kind: 'reel', draft: true },
-  { client: 'Lemon Drop', title: 'Publicaciones de la cuenta de Lemon Drop', ig: '', kind: 'reel', draft: true },
   { client: 'Emi Falck', title: 'Publicaciones en redes de Emi Falck', ig: '', kind: 'reel', draft: true }
 ];
 

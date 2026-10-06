@@ -24,7 +24,7 @@ montaje conserva las de la v2: **Chakra Petch** y **Space Mono**.
 | URL | Página |
 |---|---|
 | `/` | Hero con loop del artista · Línea de tiempo · Destacados · Lo que hago · Fotografía · Sobre mí · Contacto |
-| `/trabajos` | Sala de montaje (línea de tiempo de edición de la v2) + todos los proyectos con filtros |
+| `/trabajos` | Sala de montaje: dos pistas (V1 cine y dirección, V2 IA, edición y redes) que corren en sentido contrario bajo el cabezal + todos los proyectos con filtros |
 | `/redes` | Carrusel de piezas de edición para redes, filtrable por cliente |
 | `/marca-personal` | Creación audiovisual, estudio de la IA y lo artesanal; intereses; formatos frente a cámara |
 | `/proyecto/<slug>` | Ficha: metadatos, galardón, reto/respuesta, impacto y piezas (YouTube, MP4, Instagram) |
@@ -46,8 +46,10 @@ No editar esos archivos a mano.
 - **Humind** está como borrador: falta portada, textos y piezas.
 - **Roque**: falta portada, rol y enlace (hoy usa portada tipográfica).
 - **Carrusel de redes**: `REELS` en `build/data.mjs`. Para una pieza de Instagram basta el código de la
-  URL (`instagram.com/reel/<código>/`). Pendientes: Conversaciones de piernas abiertas, cuenta de
-  Lemon Drop y redes de Emi Falck.
+  URL (`instagram.com/reel/<código>/`). Pendientes: Conversaciones de piernas abiertas y redes de
+  Emi Falck.
+- **Miniaturas de Instagram**: guardar la imagen como `img/redes/<código>.webp` (9:16). Se usa sola
+  como portada de la pieza en el carrusel y del proyecto si no tiene `cover`.
 - **Loop del artista**: los fotogramas salen de `img/artista/` (orden alfabético, 4:5). Hoy son seis
   tratamientos del mismo retrato; reemplázalos por fotos reales en secuencia para un loop tipo GIF.
 - **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`

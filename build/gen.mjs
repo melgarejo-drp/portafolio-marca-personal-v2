@@ -1,4 +1,4 @@
-// Genera el sitio estático: index, trabajos, redes, marca-personal, proyecto/*, coleccion/*, 404 y sitemap.
+// Genera el sitio estático: index, trabajos, redes, marca-personal, contacto, proyecto/*, coleccion/*, 404 y sitemap.
 // Uso: node build/gen.mjs   (sin dependencias)
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -94,14 +94,14 @@ const header = (current) => `
   <nav class="nav-links" aria-label="Principal">
     ${NAV.map(([k, href, label]) => `<a href="${href}"${k === current ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
   </nav>
-  <a class="pill pill-dark nav-cta" href="/#contacto">Contacto</a>
+  <a class="pill pill-dark nav-cta" href="/contacto"${current === 'contacto' ? ' aria-current="page"' : ''}>Contacto</a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn><span></span><span></span><span class="sr">Menú</span></button>
 </header>
 <div class="menu" id="menu" data-menu hidden>
   <nav aria-label="Menú móvil">
     <a href="/">Inicio</a>
     ${NAV.map(([, href, label]) => `<a href="${href}">${label}</a>`).join('\n    ')}
-    <a href="/#contacto">Contacto</a>
+    <a href="/contacto">Contacto</a>
   </nav>
   <div class="menu-foot">${SITE.socials.map((s) => `<a href="${s.url}" target="_blank" rel="noreferrer noopener">${s.name}</a>`).join('')}</div>
 </div>`;
@@ -111,7 +111,7 @@ const footer = () => `
   <div class="wrap footer-top">
     <div>
       <p class="eyebrow">¿Tienes una historia?</p>
-      <a class="footer-mail" href="/#contacto">Hablemos <span>${ICON.arrow}</span></a>
+      <a class="footer-mail" href="/contacto">Hablemos <span>${ICON.arrow}</span></a>
     </div>
     <nav class="footer-links" aria-label="Pie de página">
       <div><p class="eyebrow">Sitio</p><a href="/">Inicio</a>${NAV.map(([, href, label]) => `<a href="${href}">${label}</a>`).join('')}</div>
@@ -327,13 +327,14 @@ function about() {
 </section>`;
 }
 
-function contact() {
+// En el inicio va al final; en /contacto es la página entera, con las redes debajo.
+function contact({ page: standalone = false } = {}) {
   return `
-<section class="section contact" id="contacto">
+<section class="section contact${standalone ? ' contact-page' : ''}" id="contacto">
   <div class="wrap contact-grid">
     <div>
       <p class="eyebrow">Contacto</p>
-      <h2 class="contact-title">Hagamos algo <em>cinematográfico.</em></h2>
+      <${standalone ? 'h1' : 'h2'} class="contact-title">Hagamos algo <em>cinematográfico.</em></${standalone ? 'h1' : 'h2'}>
       <p class="contact-note">Cuéntame del proyecto: formato, tiempos y lo que quieres que sienta la gente. Te respondo por correo.</p>
     </div>
     <form class="form" id="contact-form" novalidate data-to="${SITE.email.join('|')}">
@@ -343,7 +344,16 @@ function contact() {
       <div class="form-row"><span class="form-status" data-status role="status"></span><button class="pill pill-dark" type="submit">Enviar mensaje ${ICON.arrow}</button></div>
     </form>
   </div>
+  ${standalone ? `<div class="wrap contact-direct">
+    <p class="eyebrow">También en</p>
+    <ul>${SITE.socials.map((x) => `<li><a href="${x.url}" target="_blank" rel="noreferrer noopener">${esc(x.name)} ${ICON.arrow}</a></li>`).join('')}</ul>
+  </div>` : ''}
 </section>`;
+}
+
+function contactPage() {
+  return page({ title: 'Contacto', path: '/contacto', body: contact({ page: true }), current: 'contacto', bodyClass: 'is-contacto',
+    desc: 'Escríbele a Simón Melgarejo: dirección, filmmaking, montaje, fotografía e IA creativa.' });
 }
 
 function home() {
@@ -567,7 +577,7 @@ function marcaPage() {
 <section class="section marca-cta">
   <div class="wrap">
     <h2 class="sec-title">¿Tu marca necesita a alguien que la cuente?</h2>
-    <a class="pill pill-dark" href="/#contacto">Hablemos ${ICON.arrow}</a>
+    <a class="pill pill-dark" href="/contacto">Hablemos ${ICON.arrow}</a>
   </div>
 </section>`;
   return page({ title: 'Marca personal', path: '/marca-personal', body, current: 'marca', bodyClass: 'is-marca', og: '/img/artista/01.webp',
@@ -721,7 +731,7 @@ function storyPage(c) {
     <div class="wrap">
       ${secHead('Hoja de contactos', c.photos.length, '<p class="sec-note">La serie completa</p>')}
       <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${num(p)}"><img src="${view(num(p))}" alt="" loading="lazy" decoding="async"></button></li>`).join('')}</ol>
-      <div class="st-end"><a class="pill pill-light" href="/#fotografia">← Volver a Fotografía</a><a class="pill pill-light" href="/#contacto">Hablemos ${ICON.arrow}</a></div>
+      <div class="st-end"><a class="pill pill-light" href="/#fotografia">← Volver a Fotografía</a><a class="pill pill-light" href="/contacto">Hablemos ${ICON.arrow}</a></div>
     </div>
   </section>
 </article>
@@ -785,6 +795,7 @@ out('index.html', home());
 out('trabajos.html', trabajosPage());
 out('redes.html', redesPage());
 out('marca-personal.html', marcaPage());
+out('contacto.html', contactPage());
 projects.forEach((p, i) => out(`proyecto/${p.slug}.html`, projectPage(p, i)));
 collections.filter((c) => c.photos.length).forEach((c) => out(`coleccion/${c.slug}.html`, collectionPage(c)));
 out('404.html', notFound());
@@ -794,6 +805,7 @@ out('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>/trabajos</loc><priority>0.9</priority></url>
   <url><loc>/redes</loc><priority>0.8</priority></url>
   <url><loc>/marca-personal</loc><priority>0.8</priority></url>
+  <url><loc>/contacto</loc><priority>0.8</priority></url>
 ${projects.map((p) => `  <url><loc>/proyecto/${p.slug}</loc><priority>0.7</priority></url>`).join('\n')}
 ${collections.filter((c) => c.photos.length).map((c) => `  <url><loc>/coleccion/${c.slug}</loc><priority>0.6</priority></url>`).join('\n')}
 </urlset>

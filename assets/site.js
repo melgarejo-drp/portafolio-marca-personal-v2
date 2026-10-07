@@ -62,7 +62,8 @@
         links.forEach(function (a) { a.classList.toggle('active', a.hash === '#' + en.target.id); });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    links.forEach(function (a) { var t = a.hash && document.getElementById(a.hash.slice(1)); if (t) spy.observe(t); });
+    // se vigilan todas las secciones con id: al entrar en una sin enlace (sobre mí, contacto) se apaga el anterior
+    if (links.some(function (a) { return a.hash && document.getElementById(a.hash.slice(1)); })) $$('main section[id]').forEach(function (t) { spy.observe(t); });
   }
 
   /* ---------- reloj local (Colombia) ---------- */

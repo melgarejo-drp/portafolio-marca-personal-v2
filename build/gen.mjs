@@ -682,7 +682,7 @@ function storyPage(c) {
   const shot = (n, cls = '') => {
     const wh = webpSize(view(n));
     const o = wh && wh[0] > wh[1] ? 'is-land' : 'is-port';
-    return `<figure class="st-shot ${o} ${cls}"><button class="st-ph" type="button" data-index="${idx(n)}" aria-label="Ampliar foto ${n}">${img(n)}</button><figcaption>${n}</figcaption></figure>`;
+    return `<figure class="st-shot ${o} ${cls}"><button class="st-ph" type="button" data-index="${idx(n)}" aria-label="Ampliar foto ${n}">${img(n)}</button></figure>`;
   };
   const block = (b) => {
     const [kind, v] = Object.entries(b)[0];
@@ -724,7 +724,7 @@ function storyPage(c) {
   <section class="st-sheet">
     <div class="wrap">
       ${secHead('Hoja de contactos', c.photos.length, '<p class="sec-note">La serie completa</p>')}
-      <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${num(p)}"><img src="${view(num(p))}" alt="" loading="lazy" decoding="async"></button><span>${num(p)}</span></li>`).join('')}</ol>
+      <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${num(p)}"><img src="${view(num(p))}" alt="" loading="lazy" decoding="async"></button></li>`).join('')}</ol>
       <div class="st-end"><a class="pill pill-light" href="/#fotografia">← Volver a Fotografía</a><a class="pill pill-light" href="/#contacto">Hablemos ${ICON.arrow}</a></div>
     </div>
   </section>

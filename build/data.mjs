@@ -274,7 +274,7 @@ export const COLLECTIONS = [
         {
           title: 'Al fuego',
           text: 'Cuando se encienden los fogones, la luz de la sala se vuelve otra. El fuego no es solo una técnica en el libro de Felipe: es el hilo de todo el menú. Trabajé con la luz disponible —llamas, lámparas, el rojo del techo— para no romper el ambiente con un flash y para que el calor se notara en el color.',
-          blocks: [{ wide: '33' }, { mosaic: ['32', '31', '34'] }, { quote: 'El fuego no se pone en pausa para la foto.' }, { trio: ['22', '26', '28'] }]
+          blocks: [{ wide: '33' }, { duo: ['32', '31'] }, { quote: 'El fuego no se pone en pausa para la foto.' }, { trio: ['22', '26', '28'] }]
         },
         {
           title: 'Al plato',

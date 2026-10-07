@@ -92,10 +92,13 @@
     if (srcs.length) {
       var POOL = 9, pool = [], k = 0, last = null, z = 1;
       srcs.forEach(function (s) { var i = new Image(); i.src = s; }); // precarga
+      // capa propia detrás del nombre: las miniaturas nunca lo tapan
+      var layer = document.createElement('div'); layer.className = 'trail-layer'; layer.setAttribute('aria-hidden', 'true');
+      hero.insertBefore(layer, hero.firstChild);
       for (var i = 0; i < POOL; i++) {
         var img = document.createElement('img');
         img.className = 'trail-img'; img.alt = ''; img.setAttribute('aria-hidden', 'true'); img.style.opacity = '0';
-        hero.appendChild(img); pool.push(img);
+        layer.appendChild(img); pool.push(img);
       }
       var spawn = function (x, y) {
         var el = pool[k % POOL], src = srcs[k % srcs.length]; k++;

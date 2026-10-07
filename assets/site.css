@@ -604,6 +604,19 @@ a.col-card:hover .col-media img{transform:scale(1.04);}
 @media (max-width:560px){.passions{grid-template-columns:1fr;}}
 .p-actions{margin-top:1.2rem;}
 
+/* ---------- estela del hero detrás del nombre ---------- */
+.trail-layer{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.hero-title,.hero-foot,.hero-meta{position:relative;z-index:2;}
+
+/* ---------- fondo del encabezado de proyecto: portada en B/N, borrosa y aclarada ---------- */
+.project.has-bg{position:relative;isolation:isolate;}
+.p-bg{position:absolute;left:0;right:0;top:0;height:min(92vh,860px);z-index:-1;overflow:hidden;}
+.p-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);
+  filter:grayscale(1) blur(7px) brightness(1.35) contrast(.8);opacity:.42;}
+.p-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(242,241,238,.25) 0%,rgba(242,241,238,.55) 55%,var(--bg) 100%);}
+.p-top{padding-bottom:clamp(1rem,3vw,2rem);}
+.has-bg .p-meta{border-top-color:var(--line-2);}
+
 /* ---------- transición entre páginas: ventana rectangular sobre fondo rojo ---------- */
 html.pt-in::after{content:'';position:fixed;inset:0;z-index:1000;background:var(--accent);}
 .pt{position:fixed;inset:0;z-index:1000;overflow:hidden;pointer-events:none;}

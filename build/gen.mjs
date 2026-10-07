@@ -610,8 +610,9 @@ function projectPage(p, i) {
   const wide = p.media.filter((m) => !m.vertical && !m.ig);
   const tall = p.media.filter((m) => m.vertical || m.ig);
   const body = `
-<article class="project">
-  <div class="wrap">
+<article class="project has-bg">
+  ${p.cover && !/^https?:/.test(p.cover) ? `<div class="p-bg" aria-hidden="true"><img src="${esc(p.cover)}" alt="" fetchpriority="high" decoding="async"></div>` : ''}
+  <div class="wrap p-top">
     <a class="back" href="/trabajos">← Trabajos</a>
     <header class="p-head">
       <p class="eyebrow">${pad(i + 1)} / ${pad(projects.length)} · ${p.tags.map((t) => tagLabel[t]).join(' · ')}</p>
@@ -621,7 +622,6 @@ function projectPage(p, i) {
     <dl class="p-meta">${meta.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
   </div>
   <div class="wrap">
-    <div class="p-cover ${p.coverVertical ? 'is-vertical' : ''}">${cover(p, { eager: true })}</div>
     ${p.link ? `<div class="p-actions"><a class="pill pill-dark" href="${esc(p.link)}" target="_blank" rel="noreferrer noopener">Ver la pieza completa ${ICON.arrow}</a></div>` : ''}
   </div>
   ${p.reto || p.respuesta ? `<div class="wrap p-text">

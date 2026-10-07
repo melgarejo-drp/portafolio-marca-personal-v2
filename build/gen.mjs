@@ -2,12 +2,16 @@
 // Uso: node build/gen.mjs   (sin dependencias)
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { SITE, TAGS, PROJECTS, FEATURED, SERVICES, COLLECTIONS, REELS } from './data.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const YEAR = 2026;
 
+// Huella del contenido para versionar CSS y JS: al cambiar el archivo cambia la URL y el navegador no usa
+// una copia vieja de la caché (el sitio anterior servía /assets/ con caché de una semana).
+const asset = (rel) => `/${rel}?v=${createHash('sha1').update(readFileSync(join(ROOT, rel))).digest('hex').slice(0, 10)}`;
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const pad = (n) => String(n).padStart(2, '0');
 const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
@@ -148,7 +152,7 @@ function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', 
 <meta name="theme-color" content="#F2F1EE">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="${asset('assets/site.css')}">
 <script>if('scrollRestoration' in history)history.scrollRestoration='manual';try{if(sessionStorage.getItem('pt')){document.documentElement.className+=' pt-in';sessionStorage.removeItem('pt');}}catch(e){}</script>
 </head>
 <body class="${bodyClass}">
@@ -158,7 +162,7 @@ ${body}
 </main>
 ${footer()}
 ${reelModal()}
-<script src="/assets/site.js" defer></script>
+<script src="${asset('assets/site.js')}" defer></script>
 </body>
 </html>
 `;

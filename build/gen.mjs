@@ -27,7 +27,7 @@ const projects = PROJECTS.filter((p) => !p.draft).map((p) => {
 const bySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));
 const years = [...new Set(projects.map((p) => p.year))].sort();
 const tagLabel = Object.fromEntries(TAGS.map((t) => [t.key, t.label]));
-const reels = REELS.filter((r) => !r.draft).map((r) => (r.ig && !r.poster ? { ...r, thumb: igThumb(r.ig) } : r));
+const reels = REELS.filter((r) => !r.draft);
 const reelClients = [...new Set(reels.map((r) => r.client))];
 
 const readImages = (rel) => {
@@ -428,12 +428,8 @@ function reelCard(r, i) {
     media = `<video muted loop playsinline preload="none" poster="${esc(r.poster || '')}"><source src="${esc(r.video)}" type="video/mp4"></video>
           <button class="reel-sound" type="button" data-sound aria-label="Activar sonido" aria-pressed="false">${ICON.sound}</button>`;
   } else {
-    media = `<a class="reel-ig${r.thumb ? ' has-thumb' : ''}" href="${igUrl(r)}" target="_blank" rel="noopener" data-ig="${r.ig}" data-kind="${r.kind}" aria-label="Ver ${esc(r.title)} — ${esc(r.client)} en Instagram">
-            ${r.thumb ? `<img class="reel-thumb" src="${r.thumb}" alt="" loading="lazy" decoding="async">` : ''}
-            <span class="reel-ig-client">${esc(r.client)}</span>
-            <span class="reel-ig-play">${ICON.play}</span>
-            <span class="reel-ig-cta">${r.kind === 'p' ? 'Ver publicación' : 'Ver reel'} ↗</span>
-          </a>`;
+    // La pieza de Instagram se carga directamente (carga diferida del navegador).
+    media = `<iframe class="reel-embed" src="${igUrl(r)}embed/" title="${esc(r.title)} — ${esc(r.client)} en Instagram" loading="lazy" scrolling="no" allowtransparency="true"></iframe>`;
   }
   return `
       <figure class="reel ${r.wide ? 'is-wide' : ''}" data-client="${esc(r.client)}" data-i="${i}">

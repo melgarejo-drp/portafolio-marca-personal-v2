@@ -48,8 +48,8 @@ No editar esos archivos a mano.
 - **Carrusel de redes**: `REELS` en `build/data.mjs`. Para una pieza de Instagram basta el código de la
   URL (`instagram.com/reel/<código>/`). Pendientes: Conversaciones de piernas abiertas y redes de
   Emi Falck.
-- **Miniaturas de Instagram**: guardar la imagen como `img/redes/<código>.webp` (9:16). Se usa sola
-  como portada de la pieza en el carrusel y del proyecto si no tiene `cover`.
+- **Miniaturas de Instagram**: guardar la imagen como `img/redes/<código>.webp` (9:16). Se usa como
+  portada del proyecto si no tiene `cover`. En el carrusel la pieza de Instagram se carga embebida.
 - **Loop del artista**: los fotogramas salen de `img/artista/` (orden alfabético, 4:5). Hoy son seis
   tratamientos del mismo retrato; reemplázalos por fotos reales en secuencia para un loop tipo GIF.
 - **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`

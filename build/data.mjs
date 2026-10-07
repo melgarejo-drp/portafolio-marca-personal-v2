@@ -226,7 +226,6 @@ export const REELS = [
   { client: 'Sin prisa y sin pausa', title: 'Promocional de la serie', ig: 'DVlfcHNDjXG', kind: 'reel', project: 'sin-prisa-y-sin-pausa' },
   { client: 'Marleny Araúz', title: 'Reel de marca personal', ig: 'DIhtuvCynlJ', kind: 'p', project: 'marleny-arauz' },
   { client: 'Marleny Araúz', title: 'Reel de marca personal', ig: 'DJKu4VZybgt', kind: 'p', project: 'marleny-arauz' },
-  { client: 'Emi Falck', title: 'Comercial Cine Colombia', video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', wide: true, project: 'cine-colombia-emi-falck' },
   { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DMX_ZbQgxW9', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
   { client: 'El Vicio Producciones', title: 'Laboratorio de actuación', ig: 'DM9QRDstKP7', kind: 'reel', project: 'laboratorio-de-actuacion-el-vicio' },
   // Pendientes: pegar el código de la publicación de Instagram y quitar `draft`.

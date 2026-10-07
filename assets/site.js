@@ -377,8 +377,9 @@
       if (ccount) ccount.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(vis.length).padStart(2, '0');
       if (cprog) cprog.parentNode.style.setProperty('--p', vis.length > 1 ? (idx / (vis.length - 1)).toFixed(4) : 1);
       if (best !== active) {
-        if (active) { var ov = $('video', active); if (ov) ov.pause(); }
+        if (active) { var ov = $('video', active); if (ov) ov.pause(); active.classList.remove('is-active'); }
         active = best;
+        if (active) active.classList.add('is-active');
         var v = active && $('video', active);
         if (v && !reduced) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
       }
@@ -426,16 +427,11 @@
       b.addEventListener('click', toggle);
       v.addEventListener('click', toggle);
     });
-    // Instagram: carga el embebido al tocar la tarjeta
-    $$('[data-ig]', car).forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        if (a.closest('.reel') !== active) { e.preventDefault(); a.closest('.reel').scrollIntoView({ behavior: behavior, inline: 'center', block: 'nearest' }); return; }
-        e.preventDefault();
-        var f = document.createElement('iframe');
-        f.src = a.href + 'embed/';
-        f.title = a.getAttribute('aria-label') || 'Instagram';
-        f.setAttribute('scrolling', 'no');
-        a.replaceWith(f);
+    // Instagram: sólo la pieza centrada recibe toques; tocar otra la trae al centro
+    $$('.reel-embed', car).forEach(function (f) {
+      f.parentNode.addEventListener('click', function () {
+        var r = f.closest('.reel');
+        if (r !== active) r.scrollIntoView({ behavior: behavior, inline: 'center', block: 'nearest' });
       });
     });
     // filtros por cliente

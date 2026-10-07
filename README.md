@@ -1,69 +1,72 @@
-# Portafolio marca personal v2 — Simón Melgarejo
+# Portafolio — Simón Melgarejo (v3)
 
-Sitio estático (sin build) del portafolio de Simón Melgarejo, filmmaker & editor.
+Sitio estático (sin build en Vercel) del portafolio de Simón Melgarejo, filmmaker, editor e investigador de IA.
 
 ## Dirección de arte
 
-Sala de montaje: **papel crema** (guion / hoja de rodaje) contra **negro de timeline**,
-con **rojo de lápiz graso** como único acento. Los proyectos viven en una línea de
-tiempo horizontal tipo NLE, sobre fondo negro, como una pista de edición real.
+Base: la plantilla editorial minimalista **Ethan Clark** (Framer). Papel claro, tinta casi negra,
+tipografía grande y apretada, mucho aire, estela de imágenes que sigue al cursor y revelado de
+imagen con forma de blob. De la v2 se conservan los datos personales, las imágenes y el componente
+de **línea de tiempo** (pista arrastrable, cabezal que "carga" el clip centrado, separadores por año,
+navegación con `←` `→`), rediseñado al estilo de la plantilla y con filtros por categoría.
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--cream` | `#F2EDE3` | Fondo de página |
-| `--ink` | `#141110` | Tinta, barra superior, sección de montaje |
-| `--red` | `#D62F1F` | Cabezal, REC, acentos, hover |
+| `--bg` | `#F2F1EE` | Fondo |
+| `--ink` | `#111110` | Texto, contacto y pie |
+| `--accent` | `#D62F1F` | Cabezal de la línea de tiempo, estado, CTA del pie |
 
-Tipografías: **Climate Crisis** (display), **Chakra Petch** (títulos/UI),
-**Archivo** (cuerpo), **Space Mono** (metadatos y terminal).
+Tipografías self-hosted: **Inter Tight** (variable) y **JetBrains Mono** (metadatos). La sala de
+montaje conserva las de la v2: **Chakra Petch** y **Space Mono**.
 
 ## Rutas
 
 | URL | Página |
 |---|---|
-| `/` | Inicio — hero con claqueta, línea de tiempo, destacados, cargos, sobre mí, contacto |
-| `/archivo` | La misma línea de tiempo, filtrable por año y por rol |
-| `/proyecto/<slug>` | Ficha individual (13 páginas) con toggle raw/colorizado |
+| `/` | Hero con loop del artista · Línea de tiempo · Destacados · Lo que hago · Fotografía · Sobre mí · Contacto |
+| `/trabajos` | Sala de montaje: dos pistas (V1 cine y dirección, V2 IA, edición y redes) que corren en sentido contrario bajo el cabezal + todos los proyectos con filtros |
+| `/redes` | Carrusel de piezas de edición para redes, filtrable por cliente |
+| `/marca-personal` | Creación audiovisual, estudio de la IA y lo artesanal; intereses; formatos frente a cámara |
+| `/proyecto/<slug>` | Ficha: metadatos, galardón, reto/respuesta, impacto y piezas (YouTube, MP4, Instagram) |
+| `/coleccion/<slug>` | Galería con lightbox (sólo se genera si la colección tiene fotos) |
+| `/archivo` | Redirige a `/trabajos` |
 
-## Interacción
+## Editar contenido
 
-- **Línea de tiempo**: regla de años, pista arrastrable, cabezal fijo que "carga"
-  el clip centrado, scroll-snap, y navegación con `←` `→`.
-- **Claqueta**: SVG con el palo articulado; golpea sola cada pocos segundos y
-  al hacerle clic.
-- **Cursor**: cruz de encuadre que se abre en anillo sobre enlaces y cambia a
-  modo scrub sobre la pista.
-- **Hover de clip**: blanco y negro → color, más un tinte rojo por `mix-blend-mode:
-  multiply` (el recurso original del sitio, no un degradado de puntos).
-- **Ficha de proyecto**: toggle Raw v-log / Colorizado sobre el fotograma.
+Todo sale de `build/data.mjs`. Después de editar:
 
-## Estructura
-
-```
-index.html          inicio
-archivo.html        línea de tiempo filtrable
-404.html            página de error
-proyecto/*.html     13 fichas
-assets/site.css     tokens + componentes
-assets/site.js      cursor, timecode, timeline, filtros, modal, toggle
-img/                imágenes originales optimizadas a WebP (1400px)
-fonts/              las cuatro tipografías, self-hosted
-vercel.json         cleanUrls + cabeceras de caché
+```bash
+node build/gen.mjs
 ```
 
-Las páginas se generan con `gen.pl` a partir de un único array de datos; no editar
-`index.html`, `archivo.html` ni `proyecto/*.html` a mano.
+Eso regenera `index.html`, `proyecto/*.html`, `coleccion/*.html`, `404.html` y `sitemap.xml`.
+No editar esos archivos a mano.
+
+- **Proyecto nuevo**: agregar un objeto a `PROJECTS` (en orden cronológico). `draft: true` lo deja fuera.
+- **Humind** está como borrador: falta portada, textos y piezas.
+- **Roque**: falta portada, rol y enlace (hoy usa portada tipográfica).
+- **Carrusel de redes**: `REELS` en `build/data.mjs`. Para una pieza de Instagram basta el código de la
+  URL (`instagram.com/reel/<código>/`). Pendientes: Conversaciones de piernas abiertas y redes de
+  Emi Falck.
+- **Miniaturas de Instagram**: guardar la imagen como `img/redes/<código>.webp` (9:16). Se usa como
+  portada del proyecto si no tiene `cover`. En el carrusel la pieza de Instagram se carga embebida.
+- **Loop del artista**: los fotogramas salen de `img/artista/` (orden alfabético, 4:5). Hoy son seis
+  tratamientos del mismo retrato; reemplázalos por fotos reales en secuencia para un loop tipo GIF.
+- **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`
+  (`al-fuego`, `el-castillo`, `la-base-fraternidad`) y volver a generar. El orden es alfabético;
+  la primera es la portada. Recomendado: WebP de ~1600 px de ancho.
+- **Colección narrativa**: si la colección tiene `story` en `build/data.mjs`, `/coleccion/<slug>` deja de ser
+  galería y se arma como relato: portada, introducción con créditos (enlaces a Instagram), capítulos de texto
+  con disposiciones de fotos (`duo`, `duo-r`, `trio`, `mosaic`, `wide`, `quote`) y hoja de contactos final.
+  Las fotos se nombran por número (`NN.webp`). Hoy la usa **Al fuego** (Felipe Hincapié × Beluga); sus textos
+  son borrador. Los originales viven en `img/raw/` y no se publican (`.vercelignore`).
+- **Videos**: `media/` (H.264, `faststart`). Portadas en `img/`.
+
+## Desarrollo local
+
+Cualquier servidor estático sirve, pero las URL limpias (`/proyecto/slug`) necesitan uno que
+resuelva `.html`, por ejemplo `npx vercel dev` o `npx serve` con `cleanUrls`.
 
 ## Despliegue
 
-No requiere build. En Vercel: importar el repo, framework **Other**, sin build
-command, output el directorio raíz. `cleanUrls` hace que `/archivo` sirva
-`archivo.html` y `/proyecto/slug` sirva `proyecto/slug.html`.
-
-## Mantenimiento
-
-- Correo del formulario: `assets/site.js` (variable `to`, partida en dos para
-  dificultar el scraping).
-- Imágenes: reemplazar el archivo en `img/` manteniendo el nombre.
-- Las métricas de los dos proyectos destacados vienen del contenido original del
-  repo `portfolio-simon`; el resto de fichas solo muestra datos verificables.
+Vercel, framework **Other**, sin build command, output el directorio raíz.

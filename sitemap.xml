@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>/</loc><priority>1.0</priority></url>
-  <url><loc>/archivo</loc><priority>0.8</priority></url>
-  <url><loc>/proyecto/allegro-live</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/buscame-ayks</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/catarsis</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/dopamine-jara</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/el-invasor</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/la-historia-de-una-sombrilla</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/la-vida-no-es-una</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/nunca-es-tarde</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/staccato</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/tatacoa-tierra-y-tiempo</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/the-book</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/ums-juanse-laverde</loc><priority>0.6</priority></url>
-  <url><loc>/proyecto/un-perdon-no-es-suficiente</loc><priority>0.6</priority></url>
+  <url><loc>/trabajos</loc><priority>0.9</priority></url>
+  <url><loc>/redes</loc><priority>0.8</priority></url>
+  <url><loc>/marca-personal</loc><priority>0.8</priority></url>
+  <url><loc>/contacto</loc><priority>0.8</priority></url>
+  <url><loc>/proyecto/ums-juanse-laverde</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/elecciones-2022-unisabana-medios</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/el-invasor</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/staccato</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/the-book</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/la-vida-no-es-una</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/dopamine-jara</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/un-perdon-no-es-suficiente</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/marleny-arauz</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/laboratorio-de-actuacion-el-vicio</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/hablando-como-los-locos</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/se-lo-digo-en-concreto</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/sin-prisa-y-sin-pausa</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/podcast-familia-y-empresas</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/monica-gomez-jaramillo</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/kling-3</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/hedra</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/cine-colombia-emi-falck</loc><priority>0.7</priority></url>
+  <url><loc>/proyecto/roque</loc><priority>0.7</priority></url>
+  <url><loc>/coleccion/al-fuego</loc><priority>0.6</priority></url>
 </urlset>

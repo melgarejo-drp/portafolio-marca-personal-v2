@@ -552,23 +552,15 @@
     });
   }
 
-  /* ---------- composición narrativa: parallax e indicador de capítulo ---------- */
+  /* ---------- composición narrativa: indicador de capítulo ---------- */
   var story = $('.story');
   if (story) {
-    var frames = reduced ? [] : $$('[data-parallax]', story);
     var chapters = $$('[data-chapter]', story), rail = $('.st-rail', story);
     var railN = $('[data-rail-n]', story), railT = $('[data-rail-t]', story), railBar = $('[data-rail-bar]', story);
     var hero = $('.st-hero', story), sheet = $('.st-sheet', story), ticking = false;
     var tick = function () {
       ticking = false;
       var vh = window.innerHeight;
-      frames.forEach(function (f) {
-        var r = f.parentNode.getBoundingClientRect();
-        if (r.bottom < -100 || r.top > vh + 100) return;
-        var k = parseFloat(f.getAttribute('data-parallax')) || 0.08;
-        var p = (r.top + r.height / 2 - vh / 2) / vh;
-        f.style.transform = 'translate3d(0,' + (p * k * -100).toFixed(2) + '%,0) scale(' + (1 + k * 1.6).toFixed(3) + ')';
-      });
       if (rail) {
         var cur = null;
         chapters.forEach(function (c) { if (c.getBoundingClientRect().top < vh * 0.45) cur = c; });

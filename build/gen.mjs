@@ -671,28 +671,31 @@ const rich = (s) => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
 function storyPage(c) {
   const st = c.story;
   const src = (n) => `/img/colecciones/${c.slug}/${n}.webp`;
+  // En la composición se usa el recorte sin firma; el visor muestra la foto completa.
+  const view = (n) => (existsSync(join(ROOT, `img/colecciones/${c.slug}/recorte/${n}.webp`)) ? `/img/colecciones/${c.slug}/recorte/${n}.webp` : src(n));
+  const num = (p) => p.split('/').pop().replace('.webp', '');
   const idx = (n) => c.photos.indexOf(src(n));
   const img = (n, { eager = false, sizes = '(max-width: 700px) 100vw, 60vw' } = {}) => {
-    const wh = webpSize(src(n));
-    return `<img src="${src(n)}" alt="${esc(c.title)} — foto ${n}"${wh ? ` width="${wh[0]}" height="${wh[1]}"` : ''} sizes="${sizes}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+    const wh = webpSize(view(n));
+    return `<img src="${view(n)}" alt="${esc(c.title)} — foto ${n}"${wh ? ` width="${wh[0]}" height="${wh[1]}"` : ''} sizes="${sizes}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
   };
   const shot = (n, cls = '') => {
-    const wh = webpSize(src(n));
+    const wh = webpSize(view(n));
     const o = wh && wh[0] > wh[1] ? 'is-land' : 'is-port';
-    return `<figure class="st-shot ${o} ${cls}"><button class="st-ph" type="button" data-index="${idx(n)}" aria-label="Ampliar foto ${n}"><span class="st-frame" data-parallax>${img(n)}</span></button><figcaption>${n}</figcaption></figure>`;
+    return `<figure class="st-shot ${o} ${cls}"><button class="st-ph" type="button" data-index="${idx(n)}" aria-label="Ampliar foto ${n}">${img(n)}</button><figcaption>${n}</figcaption></figure>`;
   };
   const block = (b) => {
     const [kind, v] = Object.entries(b)[0];
     if (kind === 'quote') return `<blockquote class="st-quote reveal"><p>${rich(v)}</p></blockquote>`;
     if (kind === 'wide') return `<div class="st-wide reveal">${shot(v)}</div>`;
-    return `<div class="st-grid st-${kind}">${v.map((n, i) => shot(n, `reveal" style="--d:${i * 120}ms`)).join('')}</div>`;
+    return `<div class="st-grid st-${kind} n${v.length}">${v.map((n, i) => shot(n, `reveal" style="--d:${i * 120}ms`)).join('')}</div>`;
   };
   const hero = c.photos[0];
-  const heroN = hero.split('/').pop().replace('.webp', '');
+  const heroN = num(hero);
   const body = `
 <article class="story" data-gallery data-photos="${esc(JSON.stringify(c.photos))}">
   <header class="st-hero">
-    <div class="st-hero-media"><button class="st-ph" type="button" data-index="0" aria-label="Ampliar foto ${heroN}"><span class="st-frame" data-parallax="0.12">${img(heroN, { eager: true, sizes: '(max-width: 700px) 100vw, 50vw' })}</span></button></div>
+    <div class="st-hero-media"><button class="st-ph" type="button" data-index="0" aria-label="Ampliar foto ${heroN}">${img(heroN, { eager: true, sizes: '(max-width: 700px) 100vw, 50vw' })}</button></div>
     <div class="st-hero-text wrap">
       <a class="back" href="/#fotografia">← Fotografía</a>
       <p class="eyebrow">Colección fotográfica · ${c.photos.length} fotos · ${st.chapters.length} capítulos</p>
@@ -721,7 +724,7 @@ function storyPage(c) {
   <section class="st-sheet">
     <div class="wrap">
       ${secHead('Hoja de contactos', c.photos.length, '<p class="sec-note">La serie completa</p>')}
-      <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${pad(i + 1)}"><img src="${p}" alt="" loading="lazy" decoding="async"></button><span>${pad(i + 1)}</span></li>`).join('')}</ol>
+      <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${num(p)}"><img src="${view(num(p))}" alt="" loading="lazy" decoding="async"></button><span>${num(p)}</span></li>`).join('')}</ol>
       <div class="st-end"><a class="pill pill-light" href="/#fotografia">← Volver a Fotografía</a><a class="pill pill-light" href="/#contacto">Hablemos ${ICON.arrow}</a></div>
     </div>
   </section>

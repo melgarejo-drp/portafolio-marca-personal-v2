@@ -248,8 +248,9 @@ export const COLLECTIONS = [
   {
     slug: 'al-fuego', title: 'Al fuego', subtitle: 'Chef Felipe Hincapié × Beluga', cover: '/img/colecciones/al-fuego/01.webp',
     // Composición narrativa (opcional). Sin `story`, la colección se muestra como galería simple.
-    // Fotos por número de archivo en img/colecciones/<slug>/NN.webp. Texto entre *asteriscos* = cursiva.
-    // Disposiciones: duo, duo-r, trio, mosaic, wide (a sangre). TEXTOS: BORRADOR para corregir.
+    // Fotos por número de archivo en img/colecciones/<slug>/NN.webp (completa, se ve en el visor) y
+    // recorte/NN.webp (sin la firma, se ve en la composición; si no existe, se usa la completa). Texto entre *asteriscos* = cursiva.
+    // Disposiciones: duo, duo-r, trio, mosaic (3 o 4 fotos), wide (a sangre). TEXTOS: BORRADOR para corregir.
     story: {
       // [etiqueta, texto, enlace opcional]
       meta: [['Chef', 'Felipe Hincapié · @chef_felipeh', 'https://www.instagram.com/chef_felipeh/'], ['Lugar', 'Beluga · @belugarest.hifi', 'https://www.instagram.com/belugarest.hifi/'], ['Grupo', 'Grupo Altas Vistas · @grupoaltasvistas', 'https://www.instagram.com/grupoaltasvistas/'], ['Ocasión', 'Experiencia privada · libro *Al fuego*'], ['Rol', 'Fotografía'], ['Año', '2026']],
@@ -263,7 +264,7 @@ export const COLLECTIONS = [
         {
           title: 'La mesa espera',
           text: 'Beluga estaba en silencio. Servilletas dobladas con el nombre bordado en rojo, platos alineados sobre el mármol, el vino esperando su turno. Me interesaba ese momento en el que todo está listo y nada ha pasado todavía: la promesa del menú antes del primer plato.',
-          blocks: [{ 'duo-r': ['04', '05'] }, { mosaic: ['21', '12', '30'] }, { wide: '25' }]
+          blocks: [{ 'duo-r': ['04', '05'] }, { mosaic: ['21', '12', '30', '25'] }]
         },
         {
           title: 'Cocina abierta',
@@ -273,7 +274,7 @@ export const COLLECTIONS = [
         {
           title: 'Al fuego',
           text: 'Cuando se encienden los fogones, la luz de la sala se vuelve otra. El fuego no es solo una técnica en el libro de Felipe: es el hilo de todo el menú. Trabajé con la luz disponible —llamas, lámparas, el rojo del techo— para no romper el ambiente con un flash y para que el calor se notara en el color.',
-          blocks: [{ wide: '33' }, { mosaic: ['32', '31', '34'] }, { quote: 'El fuego no se pone en pausa para la foto.' }, { duo: ['27', '26'] }, { trio: ['22', '23', '28'] }]
+          blocks: [{ wide: '33' }, { mosaic: ['32', '31', '34'] }, { quote: 'El fuego no se pone en pausa para la foto.' }, { trio: ['22', '26', '28'] }]
         },
         {
           title: 'Al plato',

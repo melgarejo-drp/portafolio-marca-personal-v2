@@ -1,6 +1,6 @@
 // Genera el sitio estático: index, trabajos, redes, marca-personal, proyecto/*, coleccion/*, 404 y sitemap.
 // Uso: node build/gen.mjs   (sin dependencias)
-import { readdirSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SITE, TAGS, PROJECTS, FEATURED, SERVICES, COLLECTIONS, REELS } from './data.mjs';
@@ -653,7 +653,94 @@ function projectPage(p, i) {
 
 /* ---------------------------------------------------------------- colección */
 
+// Ancho y alto de un WebP (VP8, VP8L o VP8X) para reservar el espacio de cada foto.
+function webpSize(rel) {
+  try {
+    const b = readFileSync(join(ROOT, decodeURIComponent(rel)));
+    const tag = b.toString('ascii', 12, 16);
+    if (tag === 'VP8X') return [1 + b.readUIntLE(24, 3), 1 + b.readUIntLE(27, 3)];
+    if (tag === 'VP8 ') return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
+    if (tag === 'VP8L') { const n = b.readUInt32LE(21); return [1 + (n & 0x3fff), 1 + ((n >> 14) & 0x3fff)]; }
+  } catch (e) { /* sin dimensiones: el navegador las calcula */ }
+  return null;
+}
+
+const rich = (s) => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+// Composición narrativa: capítulos de texto intercalados con disposiciones de fotos.
+function storyPage(c) {
+  const st = c.story;
+  const src = (n) => `/img/colecciones/${c.slug}/${n}.webp`;
+  const idx = (n) => c.photos.indexOf(src(n));
+  const img = (n, { eager = false, sizes = '(max-width: 700px) 100vw, 60vw' } = {}) => {
+    const wh = webpSize(src(n));
+    return `<img src="${src(n)}" alt="${esc(c.title)} — foto ${n}"${wh ? ` width="${wh[0]}" height="${wh[1]}"` : ''} sizes="${sizes}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+  };
+  const shot = (n, cls = '') => {
+    const wh = webpSize(src(n));
+    const o = wh && wh[0] > wh[1] ? 'is-land' : 'is-port';
+    return `<figure class="st-shot ${o} ${cls}"><button class="st-ph" type="button" data-index="${idx(n)}" aria-label="Ampliar foto ${n}"><span class="st-frame" data-parallax>${img(n)}</span></button><figcaption>${n}</figcaption></figure>`;
+  };
+  const block = (b) => {
+    const [kind, v] = Object.entries(b)[0];
+    if (kind === 'quote') return `<blockquote class="st-quote reveal"><p>${rich(v)}</p></blockquote>`;
+    if (kind === 'wide') return `<div class="st-wide reveal">${shot(v)}</div>`;
+    return `<div class="st-grid st-${kind}">${v.map((n, i) => shot(n, `reveal" style="--d:${i * 120}ms`)).join('')}</div>`;
+  };
+  const hero = c.photos[0];
+  const heroN = hero.split('/').pop().replace('.webp', '');
+  const body = `
+<article class="story" data-gallery data-photos="${esc(JSON.stringify(c.photos))}">
+  <header class="st-hero">
+    <div class="st-hero-media"><button class="st-ph" type="button" data-index="0" aria-label="Ampliar foto ${heroN}"><span class="st-frame" data-parallax="0.12">${img(heroN, { eager: true, sizes: '(max-width: 700px) 100vw, 50vw' })}</span></button></div>
+    <div class="st-hero-text wrap">
+      <a class="back" href="/#fotografia">← Fotografía</a>
+      <p class="eyebrow">Colección fotográfica · ${c.photos.length} fotos · ${st.chapters.length} capítulos</p>
+      <h1 class="st-title">${esc(c.title)}</h1>
+      <p class="st-sub">${esc(c.subtitle)}</p>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="st-intro">
+      <p class="st-lead reveal">${rich(st.intro)}</p>
+      <dl class="st-meta reveal">${st.meta.map(([k, v, u]) => `<div><dt>${esc(k)}</dt><dd>${u ? `<a href="${esc(u)}" target="_blank" rel="noreferrer noopener">${rich(v)} ↗</a>` : rich(v)}</dd></div>`).join('')}</dl>
+    </div>
+  </div>
+  <nav class="st-rail" aria-hidden="true"><span class="st-rail-n" data-rail-n>00</span><span class="st-rail-t" data-rail-t>${esc(c.title)}</span><span class="st-rail-bar"><i data-rail-bar></i></span></nav>
+  ${st.chapters.map((ch, i) => `
+  <section class="st-chapter" data-chapter="${pad(i + 1)}" data-title="${esc(ch.title)}">
+    <div class="wrap">
+      <header class="st-ch-head">
+        <span class="st-ch-n reveal">${pad(i + 1)}<small>/${pad(st.chapters.length)}</small></span>
+        <h2 class="st-ch-title reveal">${rich(ch.title)}</h2>
+        <p class="st-ch-text reveal">${rich(ch.text)}</p>
+      </header>
+      ${ch.blocks.map(block).join('\n      ')}
+    </div>
+  </section>`).join('')}
+  <section class="st-sheet">
+    <div class="wrap">
+      ${secHead('Hoja de contactos', c.photos.length, '<p class="sec-note">La serie completa</p>')}
+      <ol class="st-contacts">${c.photos.map((p, i) => `<li><button class="st-ph" type="button" data-index="${i}" aria-label="Ampliar foto ${pad(i + 1)}"><img src="${p}" alt="" loading="lazy" decoding="async"></button><span>${pad(i + 1)}</span></li>`).join('')}</ol>
+      <div class="st-end"><a class="pill pill-light" href="/#fotografia">← Volver a Fotografía</a><a class="pill pill-light" href="/#contacto">Hablemos ${ICON.arrow}</a></div>
+    </div>
+  </section>
+</article>
+${lightbox()}`;
+  return page({ title: `${c.title} — ${c.subtitle}`, path: `/coleccion/${c.slug}`, body, og: c.cover || '/img/og.jpg', current: 'fotografia', bodyClass: 'is-story',
+    desc: `${c.title}: ${st.intro.replace(/\*/g, '').slice(0, 150)}…` });
+}
+
+const lightbox = () => `<div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="lb-x" type="button" data-lb-close aria-label="Cerrar">✕</button>
+  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Anterior">←</button>
+  <img alt="">
+  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Siguiente">→</button>
+  <span class="lb-count" data-lb-count></span>
+</div>`;
+
 function collectionPage(c) {
+  if (c.story) return storyPage(c);
   const body = `
 <article class="project">
   <div class="wrap">
@@ -668,13 +755,7 @@ function collectionPage(c) {
     </div>
   </div>
 </article>
-<div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Foto ampliada">
-  <button class="lb-x" type="button" data-lb-close aria-label="Cerrar">✕</button>
-  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Anterior">←</button>
-  <img alt="">
-  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Siguiente">→</button>
-  <span class="lb-count" data-lb-count></span>
-</div>`;
+${lightbox()}`;
   return page({ title: `${c.title} — ${c.subtitle}`, path: `/coleccion/${c.slug}`, body, og: c.cover || '/img/og.jpg', current: 'fotografia' });
 }
 

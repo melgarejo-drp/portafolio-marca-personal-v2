@@ -519,16 +519,20 @@
   /* ---------- galería de colección ---------- */
   var gallery = $('[data-gallery]'), lb = $('[data-lightbox]');
   if (gallery && lb) {
-    var items = $$('.m-item', gallery), lbImg = $('img', lb), lbCount = $('[data-lb-count]', lb), idx = 0, prevFocus = null;
+    // Botones con data-index; la lista de fotos sale de data-photos (composición) o de los propios botones (galería).
+    var items = $$('[data-index]', gallery), lbImg = $('img', lb), lbCount = $('[data-lb-count]', lb), idx = 0, prevFocus = null;
+    var list = [];
+    try { list = JSON.parse(gallery.getAttribute('data-photos') || '[]'); } catch (e) { list = []; }
+    if (!list.length) list = items.map(function (b) { var im = $('img', b); return im.currentSrc || im.src; });
+    var title = document.title.split(' — ')[0];
     var show = function (i) {
-      idx = (i + items.length) % items.length;
-      var src = $('img', items[idx]);
-      lbImg.src = src.currentSrc || src.src; lbImg.alt = src.alt;
-      lbCount.textContent = (idx + 1) + ' / ' + items.length;
+      idx = (i + list.length) % list.length;
+      lbImg.src = list[idx]; lbImg.alt = title + ' — foto ' + (idx + 1);
+      lbCount.textContent = (idx + 1) + ' / ' + list.length;
     };
     var openLb = function (i) { prevFocus = document.activeElement; show(i); lb.hidden = false; document.documentElement.style.overflow = 'hidden'; $('[data-lb-close]', lb).focus(); };
     var closeLb = function () { lb.hidden = true; document.documentElement.style.overflow = ''; if (prevFocus) prevFocus.focus(); };
-    items.forEach(function (b, i) { b.addEventListener('click', function () { openLb(i); }); });
+    items.forEach(function (b) { b.addEventListener('click', function () { openLb(+b.getAttribute('data-index')); }); });
     $('[data-lb-close]', lb).addEventListener('click', closeLb);
     $('[data-lb-prev]', lb).addEventListener('click', function () { show(idx - 1); });
     $('[data-lb-next]', lb).addEventListener('click', function () { show(idx + 1); });
@@ -546,6 +550,39 @@
       var dx = e.changedTouches[0].clientX - tx; tx = null;
       if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
     });
+  }
+
+  /* ---------- composición narrativa: parallax e indicador de capítulo ---------- */
+  var story = $('.story');
+  if (story) {
+    var frames = reduced ? [] : $$('[data-parallax]', story);
+    var chapters = $$('[data-chapter]', story), rail = $('.st-rail', story);
+    var railN = $('[data-rail-n]', story), railT = $('[data-rail-t]', story), railBar = $('[data-rail-bar]', story);
+    var hero = $('.st-hero', story), sheet = $('.st-sheet', story), ticking = false;
+    var tick = function () {
+      ticking = false;
+      var vh = window.innerHeight;
+      frames.forEach(function (f) {
+        var r = f.parentNode.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        var k = parseFloat(f.getAttribute('data-parallax')) || 0.08;
+        var p = (r.top + r.height / 2 - vh / 2) / vh;
+        f.style.transform = 'translate3d(0,' + (p * k * -100).toFixed(2) + '%,0) scale(' + (1 + k * 1.6).toFixed(3) + ')';
+      });
+      if (rail) {
+        var cur = null;
+        chapters.forEach(function (c) { if (c.getBoundingClientRect().top < vh * 0.45) cur = c; });
+        var past = hero.getBoundingClientRect().bottom < vh * 0.3 && sheet.getBoundingClientRect().top > vh * 0.6;
+        rail.classList.toggle('on', !!cur && past);
+        if (cur) { railN.textContent = cur.getAttribute('data-chapter'); railT.textContent = cur.getAttribute('data-title'); }
+        var top = story.getBoundingClientRect().top, h = story.offsetHeight - vh;
+        railBar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, -top / h)).toFixed(4) + ')';
+      }
+    };
+    var req = function () { if (!ticking) { ticking = true; requestAnimationFrame(tick); } };
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    tick();
   }
 
   /* ---------- formulario: abre el cliente de correo ---------- */

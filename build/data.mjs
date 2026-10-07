@@ -245,7 +245,49 @@ export const SERVICES = [
 // Colecciones de fotos. Las imágenes se leen solas de img/colecciones/<slug>/ (jpg, png o webp,
 // en orden alfabético). La primera es la portada salvo que se indique `cover`.
 export const COLLECTIONS = [
-  { slug: 'al-fuego', title: 'Al fuego', subtitle: 'Chef Felipe Hincapié' },
+  {
+    slug: 'al-fuego', title: 'Al fuego', subtitle: 'Chef Felipe Hincapié × Beluga', cover: '/img/colecciones/al-fuego/01.webp',
+    // Composición narrativa (opcional). Sin `story`, la colección se muestra como galería simple.
+    // Fotos por número de archivo en img/colecciones/<slug>/NN.webp. Texto entre *asteriscos* = cursiva.
+    // Disposiciones: duo, duo-r, trio, mosaic, wide (a sangre). TEXTOS: BORRADOR para corregir.
+    story: {
+      // [etiqueta, texto, enlace opcional]
+      meta: [['Chef', 'Felipe Hincapié · @chef_felipeh', 'https://www.instagram.com/chef_felipeh/'], ['Lugar', 'Beluga · @belugarest.hifi', 'https://www.instagram.com/belugarest.hifi/'], ['Grupo', 'Grupo Altas Vistas · @grupoaltasvistas', 'https://www.instagram.com/grupoaltasvistas/'], ['Ocasión', 'Experiencia privada · libro *Al fuego*'], ['Rol', 'Fotografía'], ['Año', '2026']],
+      intro: 'Una noche, una cocina abierta y un libro que todavía olía a tinta. Felipe Hincapié convirtió Beluga, del Grupo Altas Vistas, en el escenario de una experiencia privada: un menú que recorría las páginas de *Al fuego*, servido a pocos metros de donde se cocinaba. Mi trabajo era estar ahí sin estorbar, y lograr que las fotos se sintieran como la noche y no como un catálogo.',
+      chapters: [
+        {
+          title: 'Antes del servicio',
+          text: 'Antes de que entrara el primer invitado, Felipe salió a la calle. Un cigarrillo, la pared de ladrillo, el delantal ya puesto. Fueron diez minutos en los que todavía no era el chef de la noche, sino alguien juntando calma. Ahí empezó la sesión: con él, no con la comida.',
+          blocks: [{ duo: ['02', '03'] }, { quote: 'Fotografiar a un cocinero es fotografiar a alguien que nunca está quieto.' }]
+        },
+        {
+          title: 'La mesa espera',
+          text: 'Beluga estaba en silencio. Servilletas dobladas con el nombre bordado en rojo, platos alineados sobre el mármol, el vino esperando su turno. Me interesaba ese momento en el que todo está listo y nada ha pasado todavía: la promesa del menú antes del primer plato.',
+          blocks: [{ 'duo-r': ['04', '05'] }, { mosaic: ['21', '12', '30'] }, { wide: '25' }]
+        },
+        {
+          title: 'Cocina abierta',
+          text: 'La cocina de Beluga no tiene puerta. No hay dónde esconder el oficio: los comensales ven cada gesto. Busqué encuadres desde el salón, entre lámparas y flores, para que la foto tuviera el punto de vista de quien está sentado a la mesa mirando cómo se arma su cena.',
+          blocks: [{ trio: ['07', '08', '09'] }, { wide: '06' }, { duo: ['11', '13'] }, { 'duo-r': ['14', '24'] }]
+        },
+        {
+          title: 'Al fuego',
+          text: 'Cuando se encienden los fogones, la luz de la sala se vuelve otra. El fuego no es solo una técnica en el libro de Felipe: es el hilo de todo el menú. Trabajé con la luz disponible —llamas, lámparas, el rojo del techo— para no romper el ambiente con un flash y para que el calor se notara en el color.',
+          blocks: [{ wide: '33' }, { mosaic: ['32', '31', '34'] }, { quote: 'El fuego no se pone en pausa para la foto.' }, { duo: ['27', '26'] }, { trio: ['22', '23', '28'] }]
+        },
+        {
+          title: 'Al plato',
+          text: 'Pan tostado, tomate, queso fresco, hierbas puestas con pinza. Cada plato salía del pase en segundos, así que fotografiar la comida fue un ejercicio de anticipación: saber dónde iba a caer la mano antes de que cayera. Quise que los platos se vieran como se ven en la mesa, sin set ni montaje de estudio.',
+          blocks: [{ 'duo-r': ['16', '15'] }, { trio: ['17', '29', '18'] }, { wide: '36' }, { duo: ['20', '35'] }, { 'duo-r': ['10', '37'] }]
+        },
+        {
+          title: 'Sobremesa',
+          text: 'Al final, lo que queda no es un plato sino un equipo. Felipe no cocinó solo: la noche fue de toda la brigada que lo acompañó en el pase. Cerré la sesión con ellos, ya sin prisa. *Al fuego* es un libro de recetas, pero esa noche fue, sobre todo, una mesa compartida.',
+          blocks: [{ duo: ['38', '40'] }, { wide: '39' }, { 'duo-r': ['19', '41'] }]
+        }
+      ]
+    }
+  },
   { slug: 'el-castillo', title: 'El Castillo', subtitle: 'Serie fotográfica' },
   { slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'Colección fotográfica' }
 ];

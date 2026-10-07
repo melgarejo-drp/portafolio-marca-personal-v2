@@ -55,6 +55,11 @@ No editar esos archivos a mano.
 - **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`
   (`al-fuego`, `el-castillo`, `la-base-fraternidad`) y volver a generar. El orden es alfabético;
   la primera es la portada. Recomendado: WebP de ~1600 px de ancho.
+- **Colección narrativa**: si la colección tiene `story` en `build/data.mjs`, `/coleccion/<slug>` deja de ser
+  galería y se arma como relato: portada, introducción con créditos (enlaces a Instagram), capítulos de texto
+  con disposiciones de fotos (`duo`, `duo-r`, `trio`, `mosaic`, `wide`, `quote`) y hoja de contactos final.
+  Las fotos se nombran por número (`NN.webp`). Hoy la usa **Al fuego** (Felipe Hincapié × Beluga); sus textos
+  son borrador. Los originales viven en `img/raw/` y no se publican (`.vercelignore`).
 - **Videos**: `media/` (H.264, `faststart`). Portadas en `img/`.
 
 ## Desarrollo local

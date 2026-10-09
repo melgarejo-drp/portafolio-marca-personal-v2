@@ -322,18 +322,18 @@ export const COLLECTIONS = [
       chapters: [
         {
           title: 'El taller',
-          text: 'Cindy se apoya en la mesa de trabajo, junto a una ventana grande sobre el centro de Bogotá, entre maniquíes, rollos de tela y carretes de hilo. Las paredes están cubiertas de fotos de moda, afiches y collages; hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
-          blocks: [{ wide: '02' }, { duo: ['03', '04'] }, { trio: ['05', '06', '07'] }]
+          text: 'Cindy mira a cámara desde el centro de su taller, con gorro de lana y tapabocas. Alrededor, maniquíes, rollos de tela y carretes de hilo; las paredes están cubiertas de fotos de moda, afiches y collages, y hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
+          blocks: [{ wide: '02' }, { duo: ['04', '05'] }, { trio: ['06', '07', '08'] }]
         },
         {
           title: 'El oficio',
-          text: 'La máquina de coser no para. Alrededor, pegante, pintura en aerosol, muñecas intervenidas con pedrería y un frasco con la palabra *Olimpo*. Aquí el diseño se aprende haciendo y se comparte: la costura también es una forma de sostener a otros.',
-          blocks: [{ wide: '08' }, { quote: 'Coser también es una forma de sostener a otros.' }, { 'duo-r': ['09', '10'] }]
+          text: 'La máquina de coser no para. Junto a la ventana que da al centro de Bogotá trabajan los colaboradores de Cindy, entre pegante, pintura en aerosol, muñecas intervenidas con pedrería y un frasco con la palabra *Olimpo*. Aquí el diseño se aprende haciendo y se comparte.',
+          blocks: [{ wide: '09' }, { quote: 'Coser también es una forma de sostener a otros.' }, { trio: ['03', '10', '11'] }]
         },
         {
           title: 'Rosa',
           text: 'La pieza central es un vestido fucsia: una crinolina que deja ver su propia estructura, tul, lazos a rayas, collares de cuentas. Me acerqué hasta que el color llenara el cuadro, porque en El Olimpo el detalle es una declaración: nada es discreto, todo está hecho para ser visto.',
-          blocks: [{ duo: ['11', '12'] }, { mosaic: ['13', '14', '15', '16'] }]
+          blocks: [{ duo: ['12', '13'] }, { mosaic: ['14', '15', '16', '17'] }]
         }
       ]
     }

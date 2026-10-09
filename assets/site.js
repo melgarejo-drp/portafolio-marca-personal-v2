@@ -200,6 +200,23 @@
     return cue;
   }
 
+  /* ---------- botón atrás de los proyectos: vuelve a la página de donde se llegó ---------- */
+  var back = $('[data-back]');
+  if (back) {
+    var ORIGIN = { '/': 'Inicio', '/trabajos': 'Trabajos', '/redes': 'Edición para redes' };
+    var from = null;
+    try {
+      var ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref && ref.origin === location.origin) {
+        var path = ref.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/$/, '$1');
+        // entre proyectos (anterior / siguiente) se conserva el origen del primero
+        from = ORIGIN[path] ? path : path.indexOf('/proyecto/') === 0 ? sessionStorage.getItem('back-from') : null;
+      }
+      if (from && ORIGIN[from]) sessionStorage.setItem('back-from', from);
+    } catch (err) { from = null; }
+    if (from && ORIGIN[from]) { back.href = from; back.textContent = '← ' + ORIGIN[from]; }
+  }
+
   /* ---------- línea de tiempo del inicio ---------- */
   var track = $('[data-track]');
   if (track) {

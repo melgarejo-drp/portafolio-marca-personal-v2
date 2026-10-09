@@ -288,6 +288,51 @@ export const COLLECTIONS = [
       ]
     }
   },
-  { slug: 'el-castillo', title: 'El Castillo', subtitle: 'Serie fotográfica' },
-  { slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'Colección fotográfica' }
+  // Series nuevas. Fotos en img/colecciones/<slug>/NN.webp (01 = portada). Los capítulos no fijan `blocks`:
+  // el generador reparte las fotos en orden entre los capítulos (ver autoLayout en gen.mjs). Para afinar la
+  // composición, escribir `blocks` a mano como en Al fuego. TEXTOS: BORRADOR para corregir.
+  {
+    slug: 'el-castillo', title: 'El Castillo', subtitle: 'Pole dance en un antiguo prostíbulo del barrio Santa Fe',
+    story: {
+      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Contexto', 'Antiguo prostíbulo, hoy centro cultural', 'https://martires.gobiernobogota.gov.co/milocalidad/castillo-antiguo-prostibulo-bogota-ahora-centro-cultural-y-artistico'], ['Rol', 'Fotografía']],
+      intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, ensayar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y a entender qué pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
+      chapters: [
+        { title: 'La casa', text: 'Las paredes todavía guardan la memoria de lo que fue el lugar. No quise borrarla con el encuadre: los pasillos, las puertas y la luz del barrio son parte de la historia. El Castillo no se entiende sin saber de dónde viene.' },
+        { title: 'Antes de subir', text: 'Calentar, vendarse las manos, ajustar la ropa, mirarse al espejo. El *pole* exige fuerza y técnica antes que cualquier pose. Esos minutos previos dicen tanto como el baile: la disciplina detrás de lo que después parece fácil.', quote: 'Aquí el cuerpo no se ofrece: se entrena, se celebra y se cuenta.' },
+        { title: 'La barra', text: 'Arriba, el cuerpo gira, se sostiene con una sola pierna, cae y vuelve a subir. Fotografié con la luz del lugar para no romper el ritmo, buscando el instante en que la fuerza y la gracia se confunden.' },
+        { title: 'Resignificar', text: 'Lo que antes era un espacio de transacción ahora es un escenario. Ese cambio no es solo de uso: es una forma de reclamar el barrio y el cuerpo. Cada foto intenta sostener esas dos capas a la vez, el pasado del lugar y la libertad de quien baila hoy.' }
+      ]
+    }
+  },
+  {
+    slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'Cindy, «la madre», y su taller de moda en el barrio Santa Fe',
+    story: {
+      meta: [['Protagonista', 'Cindy, «la madre»'], ['Lugar', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía']],
+      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie retrata ese universo desde adentro.',
+      chapters: [
+        { title: 'La madre', text: 'Antes que diseñadora, Cindy es la persona a la que otros llegan. El apodo no es un adorno: nombra una forma de cuidar en un barrio donde muchas veces nadie más cuida. Quise empezar por ella, por su mirada y su presencia.' },
+        { title: 'El taller', text: 'Telas, moldes, máquinas, hilos por todas partes. En El Olimpo el oficio se aprende haciendo y se comparte. Fotografié las manos y los objetos con la misma atención que los rostros, porque ahí también está el retrato.', quote: 'Coser también es una forma de sostener a otros.' },
+        { title: 'Vestir', text: 'Cuando las prendas se terminan, aparecen los cuerpos que las llevan. Probarse un vestido es un momento íntimo y a la vez una afirmación: así quiero que me vean. La cámara acompaña sin dirigir.' },
+        { title: 'Familia elegida', text: 'Al final, El Olimpo no es un lugar sino las personas que lo habitan. Una familia que no viene de la sangre sino de la decisión de estar juntas. La serie cierra con ellas.' }
+      ]
+    }
+  },
+  {
+    slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'La fiesta universitaria del centro de Bogotá',
+    story: {
+      meta: [['Lugar', 'La Base Fraternidad · centro de Bogotá'], ['Escena', 'Fiesta universitaria'], ['Rol', 'Fotografía']],
+      intro: 'En el centro de Bogotá hay una casa dispuesta como discoteca. Se llama La Base Fraternidad y los fines de semana se llena de universitarios. Esta serie es sobre eso que pasa cuando una casa se vuelve pista: la fiesta, el calor, el baile.',
+      chapters: [
+        { title: 'La casa', text: 'Una puerta, unas escaleras, cuartos que dejaron de ser cuartos. La Base no es un club con pista diseñada: es una casa ocupada por la música. Esa arquitectura doméstica cambia cómo se vive la noche, y quise que se notara.' },
+        { title: 'Calor', text: 'Hacia la medianoche la casa se cierra sobre sí misma. Sudor, luces de color, humo, cuerpos a pocos centímetros. Disparé dentro de la multitud, sin distancia, para que la foto tuviera la temperatura del lugar.', quote: 'Una casa llena se convierte en un solo cuerpo que respira al ritmo del bajo.' },
+        { title: 'El baile', text: 'Hay quien baila con los ojos cerrados y quien baila para la cámara. Me interesaban los dos: el gesto que nadie ve y la pose que se sabe vista. Juntos cuentan lo que es tener veinte años en el centro de la ciudad.' },
+        { title: 'Última canción', text: 'Cuando la música baja, quedan las caras cansadas, los abrazos y los vasos en el piso. La serie termina ahí, en el momento en que la fiesta empieza a convertirse en recuerdo.' }
+      ]
+    }
+  },
+  {
+    // Recopilatorio de diseño gráfico: galería simple (sin `story`).
+    slug: 'flyers-la-base', title: 'Flyers de La Base', subtitle: 'Diseño gráfico impulsado con IA', kind: 'Diseño gráfico', unit: 'piezas',
+    intro: 'Recopilatorio de flyers para promocionar la fiesta en *La Base Fraternidad*. Cada pieza parte de una dirección de arte propia y usa inteligencia artificial para generar y llevar las imágenes al tono de la fiesta: rápido, llamativo y pensado para circular en redes.'
+  }
 ];

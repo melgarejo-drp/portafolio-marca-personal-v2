@@ -16,8 +16,8 @@ navegación con `←` `→`), rediseñado al estilo de la plantilla y con filtro
 | `--ink` | `#111110` | Texto, contacto y pie |
 | `--accent` | `#D62F1F` | Cabezal de la línea de tiempo, estado, CTA del pie |
 
-Tipografías self-hosted: **Inter Tight** (variable) y **JetBrains Mono** (metadatos). La sala de
-montaje conserva las de la v2: **Chakra Petch** y **Space Mono**.
+Tipografías self-hosted: **Inter Tight** (variable) y **JetBrains Mono** (metadatos). La sala de montaje
+también usa Inter Tight.
 
 ## Rutas
 
@@ -43,6 +43,10 @@ Eso regenera `index.html`, `proyecto/*.html`, `coleccion/*.html`, `404.html` y `
 No editar esos archivos a mano.
 
 - **Proyecto nuevo**: agregar un objeto a `PROJECTS` (en orden cronológico). `draft: true` lo deja fuera.
+  El sitio los muestra al revés: línea de tiempo, sala de montaje, numeración y "siguiente proyecto" van del más
+  reciente al primero.
+- **Botón atrás de los proyectos**: según la página de origen muestra ← Inicio, ← Trabajos o ← Edición para redes
+  (se conserva al pasar de un proyecto a otro). Sin origen conocido, ← Trabajos.
 - **Humind** está como borrador: falta portada, textos y piezas.
 - **Roque**: falta portada, rol y enlace (hoy usa portada tipográfica).
 - **Carrusel de redes**: `REELS` en `build/data.mjs`. Para una pieza de Instagram basta el código de la
@@ -53,13 +57,14 @@ No editar esos archivos a mano.
 - **Loop del artista**: los fotogramas salen de `img/artista/` (orden alfabético, 4:5). Hoy son seis
   tratamientos del mismo retrato; reemplázalos por fotos reales en secuencia para un loop tipo GIF.
 - **Colecciones de fotos**: soltar las imágenes en `img/colecciones/<slug>/`
-  (`al-fuego`, `el-castillo`, `la-base-fraternidad`) y volver a generar. El orden es alfabético;
-  la primera es la portada. Recomendado: WebP de ~1600 px de ancho.
+  (`al-fuego`, `el-castillo`, `el-olimpo`, `la-base-fraternidad`, `flyers-la-base`) y volver a generar. El orden es
+  alfabético; la primera es la portada. En el inicio sólo aparecen las colecciones que ya tienen imágenes. Recomendado: WebP de ~1600 px de ancho.
 - **Colección narrativa**: si la colección tiene `story` en `build/data.mjs`, `/coleccion/<slug>` deja de ser
   galería y se arma como relato: portada, introducción con créditos (enlaces a Instagram), capítulos de texto
   con disposiciones de fotos (`duo`, `duo-r`, `trio`, `mosaic`, `wide`, `quote`) y hoja de contactos final.
-  Las fotos se nombran por número (`NN.webp`). Hoy la usa **Al fuego** (Felipe Hincapié × Beluga); sus textos
-  son borrador. Los originales viven en `img/raw/` y no se publican (`.vercelignore`).
+  Las fotos se nombran por número (`NN.webp`). Hoy la usan **Al fuego**, **El Castillo**, **El Olimpo** y **La Base Fraternidad**; sus textos son
+  borrador. Si un capítulo no tiene `blocks`, el generador reparte solo las fotos en orden entre esos capítulos.
+  **Flyers de La Base** es galería simple con introducción (`kind`, `unit`, `intro`). Los originales viven en `img/raw/` y no se publican (`.vercelignore`).
 - **Videos**: `media/` (H.264, `faststart`). Portadas en `img/`.
 
 ## Desarrollo local

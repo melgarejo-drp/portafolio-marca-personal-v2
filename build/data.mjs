@@ -288,6 +288,83 @@ export const COLLECTIONS = [
       ]
     }
   },
-  { slug: 'el-castillo', title: 'El Castillo', subtitle: 'Serie fotográfica' },
-  { slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'Colección fotográfica' }
+  // Series nuevas. Fotos en img/colecciones/<slug>/NN.webp (01 = portada), numeradas en orden de lectura.
+  // Originales en img/raw/<slug>/ (no se publican). TEXTOS: BORRADOR para corregir.
+  {
+    slug: 'el-castillo', title: 'El Castillo', subtitle: 'Pole dance en un antiguo prostíbulo del barrio Santa Fe',
+    story: {
+      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Rol', 'Fotografía'], ['Año', '2023']],
+      intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, entrenar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y lo que pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
+      chapters: [
+        {
+          title: 'La casa',
+          text: 'Antes de llegar a la barra hay que subir. En las escaleras, retratos en blanco y negro miran a quien entra; en las paredes, murales hechos a muchas manos, colores, frases. El Castillo cuenta su nueva historia en los muros antes de que nadie diga una palabra.',
+          blocks: [{ duo: ['02', '03'] }, { quote: 'Es mejor ser con miedo que dejar de ser por miedo.' }]
+        },
+        {
+          title: 'En el piso',
+          text: 'La clase empieza abajo, sobre colchonetas de colores. Estirar, abrir la cadera, sostener el peso de otro cuerpo, dejarse corregir. Aquí el *pole* es primero disciplina: fuerza, flexibilidad y confianza en quien te acompaña. Cada estiramiento es también una forma de cuidado.',
+          blocks: [{ wide: '04' }, { duo: ['05', '06'] }, { 'duo-r': ['07', '08'] }]
+        },
+        {
+          title: 'La barra',
+          text: 'Arriba, el mundo se pone de cabeza. Un cuerpo se cuelga de una sola pierna, gira, se sostiene con las manos y vuelve a caer. Usé flash para congelar el movimiento en la penumbra del salón y quedarme con el instante en que la fuerza y la gracia se confunden. Lo que antes era un espacio de transacción ahora es un escenario: el cuerpo no se ofrece, se entrena y se celebra.',
+          blocks: [{ trio: ['09', '10', '11'] }]
+        }
+      ]
+    }
+  },
+  {
+    slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'El taller de Cindy, «la madre», en el barrio Santa Fe',
+    story: {
+      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Rol', 'Fotografía'], ['Año', '2023']],
+      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie retrata a Cindy en su taller y, sobre todo, lo que allí se construye: el lugar, las herramientas y las piezas.',
+      chapters: [
+        {
+          title: 'El taller',
+          text: 'Cindy mira a cámara desde el centro de su taller, con gorro de lana y tapabocas. Alrededor, maniquíes, rollos de tela y carretes de hilo; las paredes están cubiertas de fotos de moda, afiches y collages, y hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
+          blocks: [{ wide: '02' }, { duo: ['04', '05'] }, { trio: ['06', '07', '08'] }]
+        },
+        {
+          title: 'El oficio',
+          text: 'La máquina de coser no para. Junto a la ventana que da al centro de Bogotá trabajan los colaboradores de Cindy, entre pegante, pintura en aerosol, muñecas intervenidas con pedrería y un frasco con la palabra *Olimpo*. Aquí el diseño se aprende haciendo y se comparte.',
+          blocks: [{ wide: '09' }, { quote: 'Coser también es una forma de sostener a otros.' }, { trio: ['03', '10', '11'] }]
+        },
+        {
+          title: 'Rosa',
+          text: 'La pieza central es un vestido fucsia: una crinolina que deja ver su propia estructura, tul, lazos a rayas, collares de cuentas. Me acerqué hasta que el color llenara el cuadro, porque en El Olimpo el detalle es una declaración: nada es discreto, todo está hecho para ser visto.',
+          blocks: [{ duo: ['12', '13'] }, { mosaic: ['14', '15', '16', '17'] }]
+        }
+      ]
+    }
+  },
+  {
+    slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'La fiesta universitaria del centro de Bogotá',
+    story: {
+      meta: [['Lugar', 'La Base Fraternidad · centro de Bogotá'], ['Escena', 'Fiesta universitaria'], ['Rol', 'Fotografía'], ['Año', '2024']],
+      intro: 'En el centro de Bogotá hay una casa dispuesta como discoteca. Se llama La Base Fraternidad y se llena de universitarios. Esta serie es sobre lo que pasa cuando una casa se vuelve pista: la fiesta, el calor, el baile.',
+      chapters: [
+        {
+          title: 'Llegar',
+          text: 'La fiesta empieza antes de entrar: en la calle, con bombo y platillos. Después vienen la puerta de madera, la mirada a cámara y el primer paso adentro, donde la luz cambia de color.',
+          blocks: [{ duo: ['02', '03'] }]
+        },
+        {
+          title: 'Calor',
+          text: 'Adentro la casa se cierra sobre sí misma. Luces violetas y verdes, humo, cuerpos a pocos centímetros. Disparé dentro de la multitud, sin distancia, para que la foto tuviera la temperatura del lugar.',
+          blocks: [{ 'duo-r': ['04', '05'] }, { quote: 'Una casa llena se convierte en un solo cuerpo que respira al ritmo del bajo.' }]
+        },
+        {
+          title: 'El baile',
+          text: 'Hay quien baila con los ojos cerrados, quien grita la canción y quien baila para la cámara. Me interesaban todos: el gesto que nadie ve y la pose que se sabe vista. Juntos cuentan lo que es tener veinte años en el centro de la ciudad.',
+          blocks: [{ trio: ['06', '07', '08'] }]
+        }
+      ]
+    }
+  },
+  {
+    // Recopilatorio de diseño gráfico: galería simple (sin `story`), en orden de fecha.
+    slug: 'flyers-la-base', title: 'Flyers de La Base', subtitle: 'Diseño gráfico impulsado con IA', kind: 'Diseño gráfico', unit: 'piezas',
+    intro: 'Dieciséis flyers, de enero a junio, para promocionar las fiestas de *La Base Fraternidad* en sus sedes del Centro y Chapinero. Cada fecha tiene su propio concepto —bienvenida de semestre, *tardeo old school*, mes de la mujer, noches de Karol G y Bad Bunny— y una imagen generada con inteligencia artificial que lo cuenta de un vistazo, sobre una misma estructura gráfica para que la marca se reconozca en el *feed*.'
+  }
 ];

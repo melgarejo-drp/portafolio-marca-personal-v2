@@ -29,7 +29,10 @@ const projects = PROJECTS.filter((p) => !p.draft).map((p) => {
   return ig ? { ...p, cover: igThumb(ig.ig), coverVertical: true } : p;
 });
 const bySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));
+// Orden de lectura en todo el sitio: del proyecto más reciente al primero.
+const ordered = projects.slice().reverse();
 const years = [...new Set(projects.map((p) => p.year))].sort();
+const span = `${years[years.length - 1]} → ${years[0]}`;
 const tagLabel = Object.fromEntries(TAGS.map((t) => [t.key, t.label]));
 const reels = REELS.filter((r) => !r.draft);
 const reelClients = [...new Set(reels.map((r) => r.client))];
@@ -86,7 +89,7 @@ function artistLoop(cls = '') {
 
 const NAV = [
   ['trabajos', '/trabajos', 'Trabajos'],
-  ['redes', '/redes', 'Redes'],
+  ['redes', '/redes', 'Edición para redes'],
   ['marca', '/marca-personal', 'Marca personal'],
   ['fotografia', '/#fotografia', 'Fotografía']
 ];
@@ -134,6 +137,12 @@ const reelModal = () => `
   </div>
 </div>`;
 
+// CSS crítico en línea: pinta el lienzo desde el primer fotograma, antes de que llegue site.css. Si la página
+// llega desde una transición (html.pt-in), el lienzo ya es rojo y no aparece un fotograma blanco entre páginas.
+// La transición nativa entre documentos (donde exista) mantiene la página anterior hasta que la nueva puede pintarse.
+const CRITICAL = 'html{background:#F2F1EE}html.pt-in{background:#D62F1F}html.pt-in::after{content:"";position:fixed;inset:0;z-index:1000;background:#D62F1F}'
+  + '@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation:none}';
+
 function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', bodyClass = '', current = '' }) {
   const full = title ? `${title} — Simón Melgarejo` : `Simón Melgarejo — ${SITE.role}`;
   return `<!doctype html>
@@ -151,9 +160,10 @@ function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F2F1EE">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script>if('scrollRestoration' in history)history.scrollRestoration='manual';try{if(sessionStorage.getItem('pt')){document.documentElement.className+=' pt-in';sessionStorage.removeItem('pt');}}catch(e){}</script>
+<style>${CRITICAL}</style>
 <link rel="preload" href="/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset('assets/site.css')}">
-<script>if('scrollRestoration' in history)history.scrollRestoration='manual';try{if(sessionStorage.getItem('pt')){document.documentElement.className+=' pt-in';sessionStorage.removeItem('pt');}}catch(e){}</script>
 </head>
 <body class="${bodyClass}">
 ${header(current)}
@@ -217,7 +227,7 @@ function hero() {
 
 function timeline() {
   let lastYear = null;
-  const track = projects.map((p, i) => {
+  const track = ordered.map((p, i) => {
     const sep = p.year !== lastYear ? `<span class="tl-year" data-sep="${p.year}" aria-hidden="true"><b>${p.year}</b></span>` : '';
     lastYear = p.year;
     const roleLine = p.role || p.award || p.client || p.studio || '';
@@ -234,7 +244,7 @@ function timeline() {
   return `
 <section class="section section-tl" id="proyectos">
   <div class="wrap">
-    ${secHead('Línea de tiempo', { n: projects.length, attr: ' data-count' }, `<p class="sec-note">${years[0]} → ${years[years.length - 1]} · Arrastra, desliza o usa ← →</p>`)}
+    ${secHead('Línea de tiempo', { n: projects.length, attr: ' data-count' }, `<p class="sec-note">${span} · Arrastra, desliza o usa ← →</p>`)}
     <div class="filters" role="group" aria-label="Filtrar proyectos" data-filters>
       <button class="chip" type="button" data-tag="all" aria-pressed="true">Todos</button>
       ${TAGS.map((t) => `<button class="chip" type="button" data-tag="${t.key}" aria-pressed="false">${t.label}</button>`).join('')}
@@ -245,7 +255,7 @@ function timeline() {
       <span class="tl-end" aria-hidden="true"></span>
     </div>
     <div class="tl-playhead" aria-hidden="true"></div>
-    <div class="tl-scrub wrap" aria-hidden="true"><span class="tl-scrub-bar"><i data-progress></i></span><span class="tl-now" data-now>${years[0]}</span></div>
+    <div class="tl-scrub wrap" aria-hidden="true"><span class="tl-scrub-bar"><i data-progress></i></span><span class="tl-now" data-now>${years[years.length - 1]}</span></div>
   </div>
   <p class="wrap tl-empty" data-empty hidden>Ningún proyecto con ese filtro.</p>
 </section>`;
@@ -281,17 +291,19 @@ function services() {
 }
 
 function photos() {
+  // Sólo las colecciones con imágenes; las demás aparecen solas al soltar sus fotos y regenerar.
+  const shown = collections.filter((c) => c.photos.length);
   return `
 <section class="section" id="fotografia">
   <div class="wrap">
-    ${secHead('Fotografía', collections.length, '<p class="sec-note">Colecciones</p>')}
+    ${secHead('Fotografía', shown.length, '<p class="sec-note">Fotografía y diseño</p>')}
     <div class="col-grid">
-      ${collections.map((c, i) => {
+      ${shown.map((c, i) => {
         const inner = `
         <span class="col-media">${c.cover
           ? `<img src="${esc(c.cover)}" alt="${esc(c.title)} — ${esc(c.subtitle)}" loading="lazy" decoding="async">`
           : `<span class="col-empty" aria-hidden="true"><span>${pad(i + 1)}</span></span>`}
-          <span class="col-count">${c.photos.length ? `${c.photos.length} fotos` : 'Próximamente'}</span>
+          <span class="col-count">${c.photos.length ? `${c.photos.length} ${c.unit || 'fotos'}` : 'Próximamente'}</span>
         </span>
         <span class="col-info"><span class="col-title">${esc(c.title)}</span><span class="col-sub">${esc(c.subtitle)}</span></span>`;
         return c.photos.length
@@ -383,12 +395,12 @@ function nleClip(p, n, clone) {
 }
 function editBay() {
   const lanes = [
-    { id: 'V1', name: 'Cine y dirección', dir: -1, items: projects.filter(isCine) },
-    { id: 'V2', name: 'IA, edición y redes', dir: 1, items: projects.filter((p) => !isCine(p)) }
+    { id: 'V1', name: 'Cine y dirección', dir: -1, items: ordered.filter(isCine) },
+    { id: 'V2', name: 'IA, edición y redes', dir: 1, items: ordered.filter((p) => !isCine(p)) }
   ];
   const lane = (l) => {
-    const clips = l.items.map((p) => nleClip(p, projects.indexOf(p) + 1, false)).join('');
-    const clones = l.items.map((p) => nleClip(p, projects.indexOf(p) + 1, true)).join('');
+    const clips = l.items.map((p) => nleClip(p, ordered.indexOf(p) + 1, false)).join('');
+    const clones = l.items.map((p) => nleClip(p, ordered.indexOf(p) + 1, true)).join('');
     return `
     <div class="nle-lane" data-lane data-dir="${l.dir}">
       <span class="nle-label" aria-hidden="true"><b>${l.id}</b><small>${l.name}</small><i>${l.dir < 0 ? '←' : '→'}</i></span>
@@ -403,7 +415,7 @@ function editBay() {
   <div class="wrap bay-head">
     <p class="bay-eyebrow"><i aria-hidden="true"></i>~/linea-de-tiempo</p>
     <h1 class="bay-title">La sala de montaje</h1>
-    <p class="bay-lede">${projects.length} clips en dos pistas · ${years[0]} → ${years[years.length - 1]}</p>
+    <p class="bay-lede">${projects.length} clips en dos pistas · ${span}</p>
   </div>
   <div class="nle" data-nle>
     <div class="nle-ruler" data-ruler aria-hidden="true"><span class="nle-tc" data-nle-tc>00:00:00:00</span></div>
@@ -424,7 +436,7 @@ ${editBay()}
       <button class="chip" type="button" data-tag="all" aria-pressed="true">Todos</button>
       ${TAGS.map((t) => `<button class="chip" type="button" data-tag="${t.key}" aria-pressed="false">${t.label}</button>`).join('')}
     </div>
-    <div class="work-grid grid-3" data-grid>${projects.slice().reverse().map((p, i) => workCard(p, i)).join('')}
+    <div class="work-grid grid-3" data-grid>${ordered.map((p, i) => workCard(p, i)).join('')}
     </div>
     <p class="tl-empty" data-grid-empty hidden>Ningún proyecto con ese filtro.</p>
   </div>
@@ -613,8 +625,8 @@ function mediaItem(m) {
 }
 
 function projectPage(p, i) {
-  const next = projects[(i + 1) % projects.length];
-  const prev = projects[(i - 1 + projects.length) % projects.length];
+  const next = ordered[(i + 1) % ordered.length];
+  const prev = ordered[(i - 1 + ordered.length) % ordered.length];
   const meta = [['Año', p.year], ['Formato', p.format], ['Rol', p.role], ['Cliente', p.client], ['Estudio', p.studio]].filter(([, v]) => v);
   const related = p.related && bySlug[p.related];
   const wide = p.media.filter((m) => !m.vertical && !m.ig);
@@ -623,7 +635,7 @@ function projectPage(p, i) {
 <article class="project has-bg">
   ${p.cover && !/^https?:/.test(p.cover) ? `<div class="p-bg" aria-hidden="true"><img src="${esc(p.cover)}" alt="" fetchpriority="high" decoding="async"></div>` : ''}
   <div class="wrap p-top">
-    <a class="back" href="/trabajos">← Trabajos</a>
+    <a class="back" href="/trabajos" data-back>← Trabajos</a>
     <header class="p-head">
       <p class="eyebrow">${pad(i + 1)} / ${pad(projects.length)} · ${p.tags.map((t) => tagLabel[t]).join(' · ')}</p>
       <h1 class="p-title">${esc(p.title)}</h1>
@@ -677,6 +689,31 @@ function webpSize(rel) {
 
 const rich = (s) => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
+// Capítulos sin `blocks`: reparte en orden las fotos que no usa ningún otro capítulo y las arma con una
+// secuencia de disposiciones. Si el capítulo tiene `quote`, la cita va después de la primera disposición.
+const AUTO = [['duo', 2], ['wide', 1], ['trio', 3], ['duo-r', 2], ['mosaic', 4]];
+function autoLayout(chapters, nums) {
+  const used = new Set(chapters.flatMap((ch) => (ch.blocks || []).flatMap((b) => [].concat(Object.values(b)[0]))));
+  const free = nums.filter((n) => !used.has(n));
+  const open = chapters.filter((ch) => !ch.blocks);
+  let k = 0;
+  return chapters.map((ch) => {
+    if (ch.blocks) return ch;
+    const j = open.indexOf(ch);
+    const take = free.slice(Math.round((free.length * j) / open.length), Math.round((free.length * (j + 1)) / open.length));
+    const blocks = [];
+    while (take.length) {
+      let [kind, n] = AUTO[k++ % AUTO.length];
+      if (take.length < n) [kind, n] = take.length === 1 ? ['wide', 1] : take.length === 2 ? ['duo', 2] : ['trio', 3];
+      const part = take.splice(0, n);
+      blocks.push({ [kind]: kind === 'wide' ? part[0] : part });
+      if (ch.quote && blocks.length === 1) blocks.push({ quote: ch.quote });
+    }
+    if (ch.quote && !blocks.length) blocks.push({ quote: ch.quote });
+    return { ...ch, blocks };
+  });
+}
+
 // Composición narrativa: capítulos de texto intercalados con disposiciones de fotos.
 function storyPage(c) {
   const st = c.story;
@@ -702,13 +739,14 @@ function storyPage(c) {
   };
   const hero = c.photos[0];
   const heroN = num(hero);
+  const chapters = autoLayout(st.chapters, c.photos.slice(1).map(num));
   const body = `
 <article class="story" data-gallery data-photos="${esc(JSON.stringify(c.photos))}">
   <header class="st-hero">
     <div class="st-hero-media"><button class="st-ph" type="button" data-index="0" aria-label="Ampliar foto ${heroN}">${img(heroN, { eager: true, sizes: '(max-width: 700px) 100vw, 50vw' })}</button></div>
     <div class="st-hero-text wrap">
       <a class="back" href="/#fotografia">← Fotografía</a>
-      <p class="eyebrow">Colección fotográfica · ${c.photos.length} fotos · ${st.chapters.length} capítulos</p>
+      <p class="eyebrow">${esc(c.kind || 'Colección fotográfica')} · ${c.photos.length} fotos · ${chapters.length} capítulos</p>
       <h1 class="st-title">${esc(c.title)}</h1>
       <p class="st-sub">${esc(c.subtitle)}</p>
     </div>
@@ -720,11 +758,11 @@ function storyPage(c) {
     </div>
   </div>
   <nav class="st-rail" aria-hidden="true"><span class="st-rail-n" data-rail-n>00</span><span class="st-rail-t" data-rail-t>${esc(c.title)}</span><span class="st-rail-bar"><i data-rail-bar></i></span></nav>
-  ${st.chapters.map((ch, i) => `
+  ${chapters.map((ch, i) => `
   <section class="st-chapter" data-chapter="${pad(i + 1)}" data-title="${esc(ch.title)}">
     <div class="wrap">
       <header class="st-ch-head">
-        <span class="st-ch-n reveal">${pad(i + 1)}<small>/${pad(st.chapters.length)}</small></span>
+        <span class="st-ch-n reveal">${pad(i + 1)}<small>/${pad(chapters.length)}</small></span>
         <h2 class="st-ch-title reveal">${rich(ch.title)}</h2>
         <p class="st-ch-text reveal">${rich(ch.text)}</p>
       </header>
@@ -759,10 +797,11 @@ function collectionPage(c) {
   <div class="wrap">
     <a class="back" href="/#fotografia">← Fotografía</a>
     <header class="p-head">
-      <p class="eyebrow">Colección fotográfica · ${c.photos.length} fotos</p>
+      <p class="eyebrow">${esc(c.kind || 'Colección fotográfica')} · ${c.photos.length} ${c.unit || 'fotos'}</p>
       <h1 class="p-title">${esc(c.title)}</h1>
       <p class="p-sub">${esc(c.subtitle)}</p>
     </header>
+    ${c.intro ? `<p class="p-lead col-intro">${rich(c.intro)}</p>` : ''}
     <div class="masonry" data-gallery>
       ${c.photos.map((src, i) => `<button class="m-item" type="button" data-index="${i}" aria-label="Ampliar foto ${i + 1}"><img src="${src}" alt="${esc(c.title)} — foto ${i + 1}" loading="lazy" decoding="async"></button>`).join('')}
     </div>
@@ -800,7 +839,7 @@ out('trabajos.html', trabajosPage());
 out('redes.html', redesPage());
 out('marca-personal.html', marcaPage());
 out('contacto.html', contactPage());
-projects.forEach((p, i) => out(`proyecto/${p.slug}.html`, projectPage(p, i)));
+ordered.forEach((p, i) => out(`proyecto/${p.slug}.html`, projectPage(p, i)));
 collections.filter((c) => c.photos.length).forEach((c) => out(`coleccion/${c.slug}.html`, collectionPage(c)));
 out('404.html', notFound());
 out('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
@@ -810,7 +849,7 @@ out('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>/redes</loc><priority>0.8</priority></url>
   <url><loc>/marca-personal</loc><priority>0.8</priority></url>
   <url><loc>/contacto</loc><priority>0.8</priority></url>
-${projects.map((p) => `  <url><loc>/proyecto/${p.slug}</loc><priority>0.7</priority></url>`).join('\n')}
+${ordered.map((p) => `  <url><loc>/proyecto/${p.slug}</loc><priority>0.7</priority></url>`).join('\n')}
 ${collections.filter((c) => c.photos.length).map((c) => `  <url><loc>/coleccion/${c.slug}</loc><priority>0.6</priority></url>`).join('\n')}
 </urlset>
 `);

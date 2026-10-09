@@ -200,6 +200,23 @@
     return cue;
   }
 
+  /* ---------- botón atrás de los proyectos: vuelve a la página de donde se llegó ---------- */
+  var back = $('[data-back]');
+  if (back) {
+    var ORIGIN = { '/': 'Inicio', '/trabajos': 'Trabajos', '/redes': 'Edición para redes' };
+    var from = null;
+    try {
+      var ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref && ref.origin === location.origin) {
+        var path = ref.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/$/, '$1');
+        // entre proyectos (anterior / siguiente) se conserva el origen del primero
+        from = ORIGIN[path] ? path : path.indexOf('/proyecto/') === 0 ? sessionStorage.getItem('back-from') : null;
+      }
+      if (from && ORIGIN[from]) sessionStorage.setItem('back-from', from);
+    } catch (err) { from = null; }
+    if (from && ORIGIN[from]) { back.href = from; back.textContent = '← ' + ORIGIN[from]; }
+  }
+
   /* ---------- línea de tiempo del inicio ---------- */
   var track = $('[data-track]');
   if (track) {
@@ -634,7 +651,8 @@
       pt.classList.add('active');
       var anim = hole.animate([size(1.02), size(0)], { duration: DUR, easing: EASE, fill: 'forwards' });
       label.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: DUR - 260, easing: 'ease-out', fill: 'forwards' });
-      var go = function () { location.href = url.href; };
+      // el lienzo queda rojo mientras carga la página siguiente
+      var go = function () { root.style.backgroundColor = '#D62F1F'; location.href = url.href; };
       anim.finished.then(function () { setTimeout(go, 140); }).catch(go);
       setTimeout(go, DUR + 900); // por si la animación no termina
     });
@@ -642,7 +660,7 @@
     // al volver con el botón atrás (bfcache) la página no debe quedar tapada
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
-      leaving = false; pt.classList.remove('active');
+      leaving = false; pt.classList.remove('active'); root.style.backgroundColor = '';
       hole.getAnimations().forEach(function (an) { an.cancel(); });
       label.getAnimations().forEach(function (an) { an.cancel(); });
       open(1.02);

@@ -293,7 +293,7 @@ export const COLLECTIONS = [
   {
     slug: 'el-castillo', title: 'El Castillo', subtitle: 'Pole dance en un antiguo prostíbulo del barrio Santa Fe',
     story: {
-      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Contexto', 'Antiguo prostíbulo, hoy centro cultural', 'https://martires.gobiernobogota.gov.co/milocalidad/castillo-antiguo-prostibulo-bogota-ahora-centro-cultural-y-artistico'], ['Rol', 'Fotografía'], ['Año', '2023']],
+      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Rol', 'Fotografía'], ['Año', '2023']],
       intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, entrenar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y lo que pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
       chapters: [
         {
@@ -317,7 +317,7 @@ export const COLLECTIONS = [
   {
     slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'El taller de Cindy, «la madre», en el barrio Santa Fe',
     story: {
-      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía'], ['Año', '2023']],
+      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Rol', 'Fotografía'], ['Año', '2023']],
       intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie retrata a Cindy en su taller y, sobre todo, lo que allí se construye: el lugar, las herramientas y las piezas.',
       chapters: [
         {

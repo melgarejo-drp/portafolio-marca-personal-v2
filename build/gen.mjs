@@ -137,6 +137,12 @@ const reelModal = () => `
   </div>
 </div>`;
 
+// CSS crítico en línea: pinta el lienzo desde el primer fotograma, antes de que llegue site.css. Si la página
+// llega desde una transición (html.pt-in), el lienzo ya es rojo y no aparece un fotograma blanco entre páginas.
+// La transición nativa entre documentos (donde exista) mantiene la página anterior hasta que la nueva puede pintarse.
+const CRITICAL = 'html{background:#F2F1EE}html.pt-in{background:#D62F1F}html.pt-in::after{content:"";position:fixed;inset:0;z-index:1000;background:#D62F1F}'
+  + '@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation:none}';
+
 function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', bodyClass = '', current = '' }) {
   const full = title ? `${title} — Simón Melgarejo` : `Simón Melgarejo — ${SITE.role}`;
   return `<!doctype html>
@@ -154,9 +160,10 @@ function page({ title, desc = SITE.description, path, body, og = '/img/og.jpg', 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F2F1EE">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script>if('scrollRestoration' in history)history.scrollRestoration='manual';try{if(sessionStorage.getItem('pt')){document.documentElement.className+=' pt-in';sessionStorage.removeItem('pt');}}catch(e){}</script>
+<style>${CRITICAL}</style>
 <link rel="preload" href="/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset('assets/site.css')}">
-<script>if('scrollRestoration' in history)history.scrollRestoration='manual';try{if(sessionStorage.getItem('pt')){document.documentElement.className+=' pt-in';sessionStorage.removeItem('pt');}}catch(e){}</script>
 </head>
 <body class="${bodyClass}">
 ${header(current)}

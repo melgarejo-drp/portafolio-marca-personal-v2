@@ -288,32 +288,53 @@ export const COLLECTIONS = [
       ]
     }
   },
-  // Series nuevas. Fotos en img/colecciones/<slug>/NN.webp (01 = portada). Los capítulos no fijan `blocks`:
-  // el generador reparte las fotos en orden entre los capítulos (ver autoLayout en gen.mjs). Para afinar la
-  // composición, escribir `blocks` a mano como en Al fuego. TEXTOS: BORRADOR para corregir.
+  // Series nuevas. Fotos en img/colecciones/<slug>/NN.webp (01 = portada), numeradas en orden de lectura.
+  // Originales en img/raw/<slug>/ (no se publican). TEXTOS: BORRADOR para corregir.
   {
     slug: 'el-castillo', title: 'El Castillo', subtitle: 'Pole dance en un antiguo prostíbulo del barrio Santa Fe',
     story: {
       meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Contexto', 'Antiguo prostíbulo, hoy centro cultural', 'https://martires.gobiernobogota.gov.co/milocalidad/castillo-antiguo-prostibulo-bogota-ahora-centro-cultural-y-artistico'], ['Rol', 'Fotografía']],
-      intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, ensayar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y a entender qué pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
+      intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, entrenar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y lo que pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
       chapters: [
-        { title: 'La casa', text: 'Las paredes todavía guardan la memoria de lo que fue el lugar. No quise borrarla con el encuadre: los pasillos, las puertas y la luz del barrio son parte de la historia. El Castillo no se entiende sin saber de dónde viene.' },
-        { title: 'Antes de subir', text: 'Calentar, vendarse las manos, ajustar la ropa, mirarse al espejo. El *pole* exige fuerza y técnica antes que cualquier pose. Esos minutos previos dicen tanto como el baile: la disciplina detrás de lo que después parece fácil.', quote: 'Aquí el cuerpo no se ofrece: se entrena, se celebra y se cuenta.' },
-        { title: 'La barra', text: 'Arriba, el cuerpo gira, se sostiene con una sola pierna, cae y vuelve a subir. Fotografié con la luz del lugar para no romper el ritmo, buscando el instante en que la fuerza y la gracia se confunden.' },
-        { title: 'Resignificar', text: 'Lo que antes era un espacio de transacción ahora es un escenario. Ese cambio no es solo de uso: es una forma de reclamar el barrio y el cuerpo. Cada foto intenta sostener esas dos capas a la vez, el pasado del lugar y la libertad de quien baila hoy.' }
+        {
+          title: 'La casa',
+          text: 'Antes de llegar a la barra hay que subir. En las escaleras, retratos en blanco y negro miran a quien entra; en las paredes, murales hechos a muchas manos, colores, frases. El Castillo cuenta su nueva historia en los muros antes de que nadie diga una palabra.',
+          blocks: [{ duo: ['02', '03'] }, { quote: 'Es mejor ser con miedo que dejar de ser por miedo.' }]
+        },
+        {
+          title: 'En el piso',
+          text: 'La clase empieza abajo, sobre colchonetas de colores. Estirar, abrir la cadera, sostener el peso de otro cuerpo, dejarse corregir. Aquí el *pole* es primero disciplina: fuerza, flexibilidad y confianza en quien te acompaña. Cada estiramiento es también una forma de cuidado.',
+          blocks: [{ wide: '04' }, { duo: ['05', '06'] }, { 'duo-r': ['07', '08'] }]
+        },
+        {
+          title: 'La barra',
+          text: 'Arriba, el mundo se pone de cabeza. Un cuerpo se cuelga de una sola pierna, gira, se sostiene con las manos y vuelve a caer. Fotografié con la luz del lugar, sin flash, buscando el instante en que la fuerza y la gracia se confunden. Lo que antes era un espacio de transacción ahora es un escenario: el cuerpo no se ofrece, se entrena y se celebra.',
+          blocks: [{ trio: ['09', '10', '11'] }]
+        }
       ]
     }
   },
   {
-    slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'Cindy, «la madre», y su taller de moda en el barrio Santa Fe',
+    slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'El taller de Cindy, «la madre», en el barrio Santa Fe',
     story: {
-      meta: [['Protagonista', 'Cindy, «la madre»'], ['Lugar', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía']],
-      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie retrata ese universo desde adentro.',
+      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía']],
+      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie no retrata a su gente sino lo que construyen juntas: el lugar, las herramientas y las piezas.',
       chapters: [
-        { title: 'La madre', text: 'Antes que diseñadora, Cindy es la persona a la que otros llegan. El apodo no es un adorno: nombra una forma de cuidar en un barrio donde muchas veces nadie más cuida. Quise empezar por ella, por su mirada y su presencia.' },
-        { title: 'El taller', text: 'Telas, moldes, máquinas, hilos por todas partes. En El Olimpo el oficio se aprende haciendo y se comparte. Fotografié las manos y los objetos con la misma atención que los rostros, porque ahí también está el retrato.', quote: 'Coser también es una forma de sostener a otros.' },
-        { title: 'Vestir', text: 'Cuando las prendas se terminan, aparecen los cuerpos que las llevan. Probarse un vestido es un momento íntimo y a la vez una afirmación: así quiero que me vean. La cámara acompaña sin dirigir.' },
-        { title: 'Familia elegida', text: 'Al final, El Olimpo no es un lugar sino las personas que lo habitan. Una familia que no viene de la sangre sino de la decisión de estar juntas. La serie cierra con ellas.' }
+        {
+          title: 'El taller',
+          text: 'Una ventana grande sobre el centro de Bogotá, maniquíes, rollos de tela, carretes de hilo. Las paredes están cubiertas de fotos de moda, afiches y collages; hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
+          blocks: [{ wide: '02' }, { duo: ['03', '04'] }, { trio: ['05', '06', '07'] }]
+        },
+        {
+          title: 'El oficio',
+          text: 'La máquina de coser no para. Alrededor, pegante, pintura en aerosol, muñecas intervenidas con pedrería y un frasco con la palabra *Olimpo*. Aquí el diseño se aprende haciendo y se comparte: la costura también es una forma de sostener a otros.',
+          blocks: [{ wide: '08' }, { quote: 'Coser también es una forma de sostener a otros.' }, { 'duo-r': ['09', '10'] }]
+        },
+        {
+          title: 'Rosa',
+          text: 'La pieza central es un vestido fucsia: una crinolina que deja ver su propia estructura, tul, lazos a rayas, collares de cuentas. Me acerqué hasta que el color llenara el cuadro, porque en El Olimpo el detalle es una declaración: nada es discreto, todo está hecho para ser visto.',
+          blocks: [{ duo: ['11', '12'] }, { mosaic: ['13', '14', '15', '16'] }]
+        }
       ]
     }
   },
@@ -321,18 +342,29 @@ export const COLLECTIONS = [
     slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'La fiesta universitaria del centro de Bogotá',
     story: {
       meta: [['Lugar', 'La Base Fraternidad · centro de Bogotá'], ['Escena', 'Fiesta universitaria'], ['Rol', 'Fotografía']],
-      intro: 'En el centro de Bogotá hay una casa dispuesta como discoteca. Se llama La Base Fraternidad y los fines de semana se llena de universitarios. Esta serie es sobre eso que pasa cuando una casa se vuelve pista: la fiesta, el calor, el baile.',
+      intro: 'En el centro de Bogotá hay una casa dispuesta como discoteca. Se llama La Base Fraternidad y se llena de universitarios. Esta serie es sobre lo que pasa cuando una casa se vuelve pista: la fiesta, el calor, el baile.',
       chapters: [
-        { title: 'La casa', text: 'Una puerta, unas escaleras, cuartos que dejaron de ser cuartos. La Base no es un club con pista diseñada: es una casa ocupada por la música. Esa arquitectura doméstica cambia cómo se vive la noche, y quise que se notara.' },
-        { title: 'Calor', text: 'Hacia la medianoche la casa se cierra sobre sí misma. Sudor, luces de color, humo, cuerpos a pocos centímetros. Disparé dentro de la multitud, sin distancia, para que la foto tuviera la temperatura del lugar.', quote: 'Una casa llena se convierte en un solo cuerpo que respira al ritmo del bajo.' },
-        { title: 'El baile', text: 'Hay quien baila con los ojos cerrados y quien baila para la cámara. Me interesaban los dos: el gesto que nadie ve y la pose que se sabe vista. Juntos cuentan lo que es tener veinte años en el centro de la ciudad.' },
-        { title: 'Última canción', text: 'Cuando la música baja, quedan las caras cansadas, los abrazos y los vasos en el piso. La serie termina ahí, en el momento en que la fiesta empieza a convertirse en recuerdo.' }
+        {
+          title: 'Llegar',
+          text: 'La fiesta empieza antes de entrar: en la calle, con bombo y platillos. Después vienen la puerta de madera, la mirada a cámara y el primer paso adentro, donde la luz cambia de color.',
+          blocks: [{ duo: ['02', '03'] }]
+        },
+        {
+          title: 'Calor',
+          text: 'Adentro la casa se cierra sobre sí misma. Luces violetas y verdes, humo, cuerpos a pocos centímetros. Disparé dentro de la multitud, sin distancia, para que la foto tuviera la temperatura del lugar.',
+          blocks: [{ 'duo-r': ['04', '05'] }, { quote: 'Una casa llena se convierte en un solo cuerpo que respira al ritmo del bajo.' }]
+        },
+        {
+          title: 'El baile',
+          text: 'Hay quien baila con los ojos cerrados, quien grita la canción y quien baila para la cámara. Me interesaban todos: el gesto que nadie ve y la pose que se sabe vista. Juntos cuentan lo que es tener veinte años en el centro de la ciudad.',
+          blocks: [{ trio: ['06', '07', '08'] }]
+        }
       ]
     }
   },
   {
-    // Recopilatorio de diseño gráfico: galería simple (sin `story`).
+    // Recopilatorio de diseño gráfico: galería simple (sin `story`), en orden de fecha.
     slug: 'flyers-la-base', title: 'Flyers de La Base', subtitle: 'Diseño gráfico impulsado con IA', kind: 'Diseño gráfico', unit: 'piezas',
-    intro: 'Recopilatorio de flyers para promocionar la fiesta en *La Base Fraternidad*. Cada pieza parte de una dirección de arte propia y usa inteligencia artificial para generar y llevar las imágenes al tono de la fiesta: rápido, llamativo y pensado para circular en redes.'
+    intro: 'Dieciséis flyers, de enero a junio, para promocionar las fiestas de *La Base Fraternidad* en sus sedes del Centro y Chapinero. Cada fecha tiene su propio concepto —bienvenida de semestre, *tardeo old school*, mes de la mujer, noches de Karol G y Bad Bunny— y una imagen generada con inteligencia artificial que lo cuenta de un vistazo, sobre una misma estructura gráfica para que la marca se reconozca en el *feed*.'
   }
 ];

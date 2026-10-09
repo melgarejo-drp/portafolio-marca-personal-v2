@@ -293,7 +293,7 @@ export const COLLECTIONS = [
   {
     slug: 'el-castillo', title: 'El Castillo', subtitle: 'Pole dance en un antiguo prostíbulo del barrio Santa Fe',
     story: {
-      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Contexto', 'Antiguo prostíbulo, hoy centro cultural', 'https://martires.gobiernobogota.gov.co/milocalidad/castillo-antiguo-prostibulo-bogota-ahora-centro-cultural-y-artistico'], ['Rol', 'Fotografía']],
+      meta: [['Lugar', 'El Castillo · barrio Santa Fe, Bogotá'], ['Disciplina', 'Pole dance'], ['Contexto', 'Antiguo prostíbulo, hoy centro cultural', 'https://martires.gobiernobogota.gov.co/milocalidad/castillo-antiguo-prostibulo-bogota-ahora-centro-cultural-y-artistico'], ['Rol', 'Fotografía'], ['Año', '2023']],
       intro: 'En el barrio Santa Fe, en el centro de Bogotá, hay una casa que durante años fue un prostíbulo. Hoy se llama El Castillo y es otra cosa: un lugar donde comunidades LGBTIQ+ llegan a crear, entrenar y expresarse. Entré a fotografiar una de esas formas de expresión, el *pole dance*, y lo que pasa cuando un cuerpo vuelve a ocupar, en sus propios términos, un espacio que antes lo vendía.',
       chapters: [
         {
@@ -308,7 +308,7 @@ export const COLLECTIONS = [
         },
         {
           title: 'La barra',
-          text: 'Arriba, el mundo se pone de cabeza. Un cuerpo se cuelga de una sola pierna, gira, se sostiene con las manos y vuelve a caer. Fotografié con la luz del lugar, sin flash, buscando el instante en que la fuerza y la gracia se confunden. Lo que antes era un espacio de transacción ahora es un escenario: el cuerpo no se ofrece, se entrena y se celebra.',
+          text: 'Arriba, el mundo se pone de cabeza. Un cuerpo se cuelga de una sola pierna, gira, se sostiene con las manos y vuelve a caer. Usé flash para congelar el movimiento en la penumbra del salón y quedarme con el instante en que la fuerza y la gracia se confunden. Lo que antes era un espacio de transacción ahora es un escenario: el cuerpo no se ofrece, se entrena y se celebra.',
           blocks: [{ trio: ['09', '10', '11'] }]
         }
       ]
@@ -317,12 +317,12 @@ export const COLLECTIONS = [
   {
     slug: 'el-olimpo', title: 'El Olimpo', subtitle: 'El taller de Cindy, «la madre», en el barrio Santa Fe',
     story: {
-      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía']],
-      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie no retrata a su gente sino lo que construyen juntas: el lugar, las herramientas y las piezas.',
+      meta: [['Taller', 'El Olimpo · barrio Santa Fe, Bogotá'], ['Diseñadora', 'Cindy, «la madre»'], ['Oficio', 'Diseño de modas y costura'], ['Contexto', 'Artículo en El Tiempo', 'https://www.eltiempo.com/bogota/el-olimpo-taller-de-moda-y-costura-en-el-barrio-santa-fe-en-bogota-664171'], ['Rol', 'Fotografía'], ['Año', '2023']],
+      intro: 'A Cindy le dicen «la madre». Es una mujer trans, diseñadora de modas, que vive en el barrio Santa Fe, en Bogotá, y se ganó el apodo por acoger a muchas personas que no tenían dónde estar. *El Olimpo* es su proyecto artístico: un taller donde la costura es oficio, refugio y escenario. Esta serie retrata a Cindy en su taller y, sobre todo, lo que allí se construye: el lugar, las herramientas y las piezas.',
       chapters: [
         {
           title: 'El taller',
-          text: 'Una ventana grande sobre el centro de Bogotá, maniquíes, rollos de tela, carretes de hilo. Las paredes están cubiertas de fotos de moda, afiches y collages; hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
+          text: 'Cindy se apoya en la mesa de trabajo, junto a una ventana grande sobre el centro de Bogotá, entre maniquíes, rollos de tela y carretes de hilo. Las paredes están cubiertas de fotos de moda, afiches y collages; hasta el piso es una galería. El Olimpo es una casa donde todo, también la cocina y el baño, termina siendo parte de la obra.',
           blocks: [{ wide: '02' }, { duo: ['03', '04'] }, { trio: ['05', '06', '07'] }]
         },
         {
@@ -341,7 +341,7 @@ export const COLLECTIONS = [
   {
     slug: 'la-base-fraternidad', title: 'La Base Fraternidad', subtitle: 'La fiesta universitaria del centro de Bogotá',
     story: {
-      meta: [['Lugar', 'La Base Fraternidad · centro de Bogotá'], ['Escena', 'Fiesta universitaria'], ['Rol', 'Fotografía']],
+      meta: [['Lugar', 'La Base Fraternidad · centro de Bogotá'], ['Escena', 'Fiesta universitaria'], ['Rol', 'Fotografía'], ['Año', '2024']],
       intro: 'En el centro de Bogotá hay una casa dispuesta como discoteca. Se llama La Base Fraternidad y se llena de universitarios. Esta serie es sobre lo que pasa cuando una casa se vuelve pista: la fiesta, el calor, el baile.',
       chapters: [
         {

@@ -14,7 +14,7 @@ export const SITE = {
   reel: 'KUhqdR2Sowo',
   email: ['melgarejorodriguez19', 'gmail.com'],
   socials: [
-    { name: 'Instagram', url: 'https://www.instagram.com/by.melgarejo/' },
+    { name: 'Instagram', url: 'https://www.instagram.com/smnmelgarejo/' },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/simon-melgarejo/' },
     { name: 'YouTube', url: 'https://www.youtube.com/@simonmelgarejo' }
   ]

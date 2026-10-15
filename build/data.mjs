@@ -23,6 +23,7 @@ export const SITE = {
 export const TAGS = [
   { key: 'direccion', label: 'Dirección' },
   { key: 'cortos', label: 'Cortometrajes' },
+  { key: 'color', label: 'Colorización' },
   { key: 'ia', label: 'IA generativa' },
   { key: 'edicion', label: 'Edición y redes' },
   { key: 'cubrimiento', label: 'Cubrimientos' }
@@ -34,7 +35,7 @@ export const PROJECTS = [
   {
     slug: 'ums-juanse-laverde', title: 'Juanse Laverde — Unisabana Music Sessions', short: 'UMS × Juanse Laverde',
     year: 2022, format: 'Music session', role: 'Dirección, edición y color', client: 'Unisabana',
-    tags: ['direccion'], cover: '/img/ums.webp',
+    tags: ['direccion', 'color'], cover: '/img/ums.webp',
     reto: 'Transmitir el estilo único del artista en una music session rápida pero efectiva.',
     respuesta: 'Un formato de menos de 5 minutos donde el artista hace una versión acústica de su canción.',
     media: [{ yt: 'P_eagrXXdls', title: 'Juanse Laverde — Unisabana Music Sessions' }]
@@ -50,7 +51,7 @@ export const PROJECTS = [
   {
     slug: 'el-invasor', title: 'El Invasor',
     year: 2023, format: 'Corto animado', role: 'Dirección, ilustración, animación y edición',
-    tags: ['direccion', 'cortos'], cover: '/img/el-invasor.webp', award: 'Ganador · Cineminutos por el Océano',
+    tags: ['direccion', 'cortos', 'color'], cover: '/img/el-invasor.webp', award: 'Ganador · Cineminutos por el Océano',
     reto: '¿Cómo hablar del cuidado de los océanos sin conocer el mar, y hacerlo en menos de 3 días? Transmitir la urgencia ambiental bajo la estricta limitante de 60 segundos.',
     respuesta: 'Un filminuto animado con una premisa sencilla: si nosotros creamos el problema, somos nosotros quienes podemos solucionarlo. Ilustración artesanal, animación fluida y edición dinámica.',
     quote: 'Ganador de Cineminutos por el Océano, Delphinus, Cancún.',
@@ -60,19 +61,19 @@ export const PROJECTS = [
   {
     slug: 'staccato', title: 'Staccato',
     year: 2023, format: 'Cortometraje', role: 'Director',
-    tags: ['direccion', 'cortos'], cover: '/img/staccato.webp',
+    tags: ['direccion', 'cortos', 'color'], cover: '/img/staccato.webp',
     media: [{ yt: 'FCb3IisjlD0', title: 'Staccato' }]
   },
   {
     slug: 'the-book', title: 'The Book',
     year: 2023, format: 'Cortometraje', role: 'Camarógrafo y colorista',
-    tags: ['cortos'], cover: '/img/the-book.webp',
+    tags: ['cortos', 'color'], cover: '/img/the-book.webp',
     media: [{ yt: 'vLRBrxkEpnM', title: 'The Book' }]
   },
   {
     slug: 'la-vida-no-es-una', title: 'La vida no es una __',
     year: 2024, format: 'Campaña de comerciales', role: 'Dirección, montaje, VFX y color',
-    tags: ['direccion'], cover: '/img/la-vida.webp',
+    tags: ['direccion', 'color'], cover: '/img/la-vida.webp',
     reto: 'Crear conciencia sobre los accidentes viales usando humor que conectara con jóvenes y adultos, y convertir una campaña educativa en un formato cautivador con alto valor de producción.',
     respuesta: 'Una micro serie que cuenta, en los lenguajes de cada género audiovisual, por qué es importante conducir con responsabilidad. Dirección cinematográfica, montaje meticuloso de VFX y una colorización atmosférica saturada.',
     quote: 'Un formato crudo y poderoso que enseña sin que se note la lección.',
@@ -87,13 +88,13 @@ export const PROJECTS = [
   {
     slug: 'dopamine-jara', title: 'Dopamine — Jara', short: 'Dopamine',
     year: 2024, format: 'Videoclip', role: 'Asistente de dirección', client: 'Jara',
-    tags: ['direccion'], cover: '/img/dopamine.webp',
+    tags: ['direccion', 'color'], cover: '/img/dopamine.webp',
     media: [{ yt: 'yoOdx2D37ps', title: 'Dopamine — Jara' }]
   },
   {
     slug: 'un-perdon-no-es-suficiente', title: 'Un perdón no es suficiente',
     year: 2024, format: 'Cortometraje', role: 'Director de posproducción, DP y colorista',
-    tags: ['cortos'], cover: '/img/perdon.webp',
+    tags: ['cortos', 'color'], cover: '/img/perdon.webp',
     media: [{ drive: '1KuXJic0fXOw-w7AeqzAI1v2P5Khz6jxk', title: 'Un perdón no es suficiente' }]
   },
   {
@@ -109,7 +110,7 @@ export const PROJECTS = [
   {
     slug: 'laboratorio-de-actuacion-el-vicio', studio: 'Lemon Drop', title: 'Laboratorio de actuación — El Vicio Producciones', short: 'Laboratorio de actuación',
     year: 2025, format: 'Edición de video', role: 'Postproducción', client: 'El Vicio Producciones',
-    tags: ['edicion'], cover: '/img/el-vicio.webp',
+    tags: ['edicion', 'color'], cover: '/img/el-vicio.webp',
     reto: 'Hacer la postproducción de un proyecto grabado en otro país.',
     respuesta: 'Postproducción con los más altos estándares de calidad.',
     media: [
@@ -121,7 +122,7 @@ export const PROJECTS = [
   {
     slug: 'hablando-como-los-locos', studio: 'Lemon Drop', title: 'Hablando como los Locos',
     year: 2025, format: 'Reels sobre podcast', role: 'Edición de video', client: 'Hablando como los Locos',
-    tags: ['edicion'], tone: 'ink',
+    tags: ['edicion', 'color'], tone: 'ink',
     respuesta: 'Reels a partir de los episodios del podcast Hablando como los Locos.',
     media: [{ ig: 'DQH8rlmCitW', kind: 'reel', title: 'Hablando como los Locos' }]
   },
@@ -186,16 +187,16 @@ export const PROJECTS = [
   {
     slug: 'cine-colombia-emi-falck', studio: 'Lemon Drop', title: 'Comercial Cine Colombia — Emi Falck', short: 'Cine Colombia × Emi Falck',
     year: 2026, format: 'Comercial con IA', role: '', client: 'Cine Colombia · Emi Falck',
-    tags: ['ia', 'direccion'], cover: '/img/cine-colombia.webp',
+    tags: ['ia', 'direccion', 'color'], cover: '/img/cine-colombia.webp',
     reto: 'Cambiar la publicidad de salas de Cine Colombia por una que se sintiera como ver una película.',
     respuesta: 'Usar la IA para contar una historia imposible: 3 personajes, una vida salvada, y cientos de historias como esa.',
     media: [{ video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', title: 'Comercial Cine Colombia — Emi Falck' }]
   },
   {
-    // Pendiente: portada, rol y sinopsis.
-    slug: 'roque', title: 'Roque',
+    // Pendiente: rol y sinopsis. Afiche completo en img/roque-poster.webp.
+    slug: 'roque', title: 'Roque', studio: 'Lemon Drop · MEVAK films',
     year: 2026, format: 'Cortometraje', role: '',
-    tags: ['direccion', 'cortos'], tone: 'accent',
+    tags: ['direccion', 'cortos', 'color'], cover: '/img/roque.webp',
     award: 'Prenominado · Categoría profesional · Smartfilms 2026',
     media: [{ drive: '1lbuggX8FyYBGBHdWY_yc0bbcXQQ4XmJs', title: 'Roque' }]
   },

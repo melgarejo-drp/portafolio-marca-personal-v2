@@ -193,11 +193,13 @@ export const PROJECTS = [
     media: [{ video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', title: 'Comercial Cine Colombia — Emi Falck' }]
   },
   {
-    // Pendiente: rol y sinopsis. Afiche completo en img/roque-poster.webp.
+    // Afiche completo en img/roque-poster.webp. Pendiente: sinopsis.
     slug: 'roque', title: 'Roque', studio: 'Lemon Drop · MEVAK films',
-    year: 2026, format: 'Cortometraje', role: '',
+    year: 2026, format: 'Cortometraje', role: 'Dirección, edición y color',
     tags: ['direccion', 'cortos', 'color'], cover: '/img/roque.webp',
     award: 'Prenominado · Categoría profesional · Smartfilms 2026',
+    respuesta: 'Un cortometraje para Smartfilms 2026 en la categoría profesional, producido por Lemon Drop y MEVAK films. Quedó prenominado y llegó a la gala de premiación.',
+    kpis: [['Prenominado', 'Smartfilms 2026'], ['Gala', 'De premiación']],
     media: [{ drive: '1lbuggX8FyYBGBHdWY_yc0bbcXQQ4XmJs', title: 'Roque' }]
   },
   {

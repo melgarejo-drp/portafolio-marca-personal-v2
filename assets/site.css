@@ -791,3 +791,5 @@ html.pt-in::after{content:'';position:fixed;inset:0;z-index:1000;background:var(
 .contact-direct a:hover{color:var(--accent);}
 .col-intro{max-width:60ch;margin:-1rem 0 clamp(2rem,4vw,3rem);}
 .bay .type-cover .tc-meta{font-family:var(--f-nle-mono);}
+.drive-frame{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#111;}
+.drive-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}

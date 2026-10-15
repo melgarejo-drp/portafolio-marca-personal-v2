@@ -3,7 +3,7 @@
 // Campos de un proyecto:
 //   slug, title, year, format, role, client, studio, tags[], cover, tone (portada tipográfica si no hay cover)
 //   reto, respuesta, quote, kpis[[valor, etiqueta]], award (galardón), link (pieza completa externa)
-//   media[]: { yt, title } · { video, poster, title, vertical } · { ig, kind: 'reel'|'p', title }
+//   media[]: { yt, title } · { drive, title } (video de Google Drive compartido con enlace) · { video, poster, title, vertical } · { ig, kind: 'reel'|'p', title }
 //   draft: true  → no se publica (falta material)
 
 export const SITE = {
@@ -61,13 +61,13 @@ export const PROJECTS = [
     slug: 'staccato', title: 'Staccato',
     year: 2023, format: 'Cortometraje', role: 'Director',
     tags: ['direccion', 'cortos'], cover: '/img/staccato.webp',
-    link: 'https://simonmelgarejo.myportfolio.com/staccato', media: []
+    media: [{ yt: 'FCb3IisjlD0', title: 'Staccato' }]
   },
   {
     slug: 'the-book', title: 'The Book',
     year: 2023, format: 'Cortometraje', role: 'Camarógrafo y colorista',
     tags: ['cortos'], cover: '/img/the-book.webp',
-    link: 'https://simonmelgarejo.myportfolio.com/the-book', media: []
+    media: [{ yt: 'vLRBrxkEpnM', title: 'The Book' }]
   },
   {
     slug: 'la-vida-no-es-una', title: 'La vida no es una __',
@@ -88,13 +88,13 @@ export const PROJECTS = [
     slug: 'dopamine-jara', title: 'Dopamine — Jara', short: 'Dopamine',
     year: 2024, format: 'Videoclip', role: 'Asistente de dirección', client: 'Jara',
     tags: ['direccion'], cover: '/img/dopamine.webp',
-    link: 'https://simonmelgarejo.myportfolio.com/dopamine-jara', media: []
+    media: [{ yt: 'yoOdx2D37ps', title: 'Dopamine — Jara' }]
   },
   {
     slug: 'un-perdon-no-es-suficiente', title: 'Un perdón no es suficiente',
     year: 2024, format: 'Cortometraje', role: 'Director de posproducción, DP y colorista',
     tags: ['cortos'], cover: '/img/perdon.webp',
-    link: 'https://simonmelgarejo.myportfolio.com/un-perdon-no-es-suficiente', media: []
+    media: [{ drive: '1KuXJic0fXOw-w7AeqzAI1v2P5Khz6jxk', title: 'Un perdón no es suficiente' }]
   },
   {
     slug: 'marleny-arauz', studio: 'Lemon Drop', title: 'Marleny Araúz — reels de marca personal', short: 'Marleny Araúz',
@@ -192,12 +192,12 @@ export const PROJECTS = [
     media: [{ video: '/media/cine-colombia-emi-falck.mp4', poster: '/img/cine-colombia.webp', title: 'Comercial Cine Colombia — Emi Falck' }]
   },
   {
-    // Pendiente: portada, rol, sinopsis y enlace al corto.
+    // Pendiente: portada, rol y sinopsis.
     slug: 'roque', title: 'Roque',
     year: 2026, format: 'Cortometraje', role: '',
-    tags: ['cortos'], tone: 'accent',
+    tags: ['direccion', 'cortos'], tone: 'accent',
     award: 'Prenominado · Categoría profesional · Smartfilms 2026',
-    media: []
+    media: [{ drive: '1lbuggX8FyYBGBHdWY_yc0bbcXQQ4XmJs', title: 'Roque' }]
   },
   {
     // Pendiente: no hay material de Humind en el repo de Lemon Drop.

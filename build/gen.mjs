@@ -63,6 +63,7 @@ const sourceLabel = (p) => {
   const m = p.media[0];
   if (m && m.ig) return 'Instagram ↗';
   if (m && m.yt) return 'YouTube ↗';
+  if (m && m.drive) return 'Video ↗';
   return '';
 };
 
@@ -609,6 +610,13 @@ function mediaItem(m) {
         <img src="${ytThumb(m.yt)}" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="yt-play">${ICON.play}</span>
       </button>
       <figcaption>${esc(m.title)}</figcaption></figure>`;
+  }
+  if (m.drive) {
+    // Video alojado en Google Drive: se ve si el archivo está compartido con "cualquier persona con el enlace".
+    const url = `https://drive.google.com/file/d/${m.drive}/view`;
+    return `<figure class="piece piece-wide">
+      <div class="drive-frame"><iframe src="https://drive.google.com/file/d/${m.drive}/preview" title="${esc(m.title)}" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
+      <figcaption><a href="${url}" target="_blank" rel="noreferrer noopener">${esc(m.title)} · Ver en Google Drive ↗</a></figcaption></figure>`;
   }
   if (m.video) {
     return `<figure class="piece ${m.vertical ? 'piece-tall' : 'piece-wide'}">
